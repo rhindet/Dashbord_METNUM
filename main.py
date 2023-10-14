@@ -25,6 +25,10 @@ notebook.add(pestaña2, text="Economia")
 etiqueta2 = tk.Label(pestaña2, text="Contenido de la Pestaña 2")
 etiqueta2.pack(fill="both", expand=True)
 
+# Personalizar el tamaño de fuente para el título de la pestaña "Economia"
+estilo = ttk.Style()
+estilo.configure("TNotebook.Tab", font=("Arial", 20))
+
 # Pestaña 3
 pestaña3 = ttk.Frame(notebook)
 notebook.add(pestaña3, text="Medicina")
