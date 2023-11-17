@@ -86,6 +86,23 @@ def crearVentana():
     resultado_label = tk.Label(marco_boton, text="")
     resultado_label.grid(row=8, column=0, columnspan=2)
 
+    # Crear las opciones para el combobox
+    opciones2 = ["Interpolación lineal", "Newton Hacia Adelante", "Newton Hacia Atrás", "Newton Diferencias Divididas", "Lagrange"]
+
+    # Crear un StringVar para almacenar la opción seleccionada
+    selected_option2 = tk.StringVar()
+
+    # Crear el combobox y asociar las opciones y el StringVar
+    combo2 = ttk.Combobox(marco_boton, textvariable=selected_option2, values=opciones2, state="normal")
+    combo2.grid(row=4, column=5, padx=5, pady=5)
+
+    # Configurar una función de devolución de llamada para manejar la selección
+    combo2.bind("<<ComboboxSelected>>", lambda event: on_select(event, combo2))
+
+    # Inicializar la opción seleccionada (puedes establecer un valor predeterminado si lo deseas)
+    selected_option2.set(opciones2[0])
+
+
     calcular_button = tk.Button(marco_boton, text="Calcular Temperatura", command=lambda: calcular_temperatura(hora1.get(),hora2.get(),hora3.get(),hora4.get(),hora5.get(),tmp1.get(),tmp2.get(),tmp3.get(),tmp4.get(),tmp5.get(), horaBuscada.get(),resultado_label))
     calcular_button.grid(row=9, column=0, columnspan=2)
 
@@ -147,6 +164,26 @@ def crearVentana():
     campo43 = tk.Entry(marco_boton4)
     campo43.grid(row=4, column=2, padx=5, pady=5)
 
+    # Crear las opciones para el combobox
+    opciones = ["Eliminación Gaussiana", "Gauss-Jordan", "Montante", "Gauss-Seidel","Jacobi"]
+
+    # Crear un StringVar para almacenar la opción seleccionada
+    selected_option = tk.StringVar()
+
+
+
+    # Crear el combobox y asociar las opciones y el StringVar
+    combo = ttk.Combobox(marco_boton4, textvariable=selected_option, values=opciones, state="normal")
+    combo.grid(row=5, column=2, padx=5, pady=5)
+
+    # Configurar una función de devolución de llamada para manejar la selección
+    combo.bind("<<ComboboxSelected>>", lambda event: on_select(event, combo))
+
+    # Inicializar la opción seleccionada (puedes establecer un valor predeterminado si lo deseas)
+    selected_option.set(opciones[0])
+
+
+
 
     resultado_label4 = tk.Label(marco_boton4, text="")
     resultado_label4.grid(row=8, column=0, columnspan=2)
@@ -188,6 +225,24 @@ def crearVentana():
     resultado_label5 = tk.Label(marco_boton5, text="")
     resultado_label5.grid(row=8, column=5, columnspan=4)
 
+    # Crear las opciones para el combobox
+    opciones3 = ["Interpolación lineal", "Newton Hacia Adelante", "Newton Hacia Atrás", "Newton Diferencias Divididas",
+                 "Lagrange"]
+
+    # Crear un StringVar para almacenar la opción seleccionada
+    selected_option3 = tk.StringVar()
+
+    # Crear el combobox y asociar las opciones y el StringVar
+    combo3 = ttk.Combobox(marco_boton, textvariable=selected_option3, values=opciones3, state="normal")
+    combo3.grid(row=7, column=0, padx=5, pady=5)
+
+    # Configurar una función de devolución de llamada para manejar la selección
+    combo3.bind("<<ComboboxSelected>>", lambda event: on_select(event, combo3))
+
+    # Inicializar la opción seleccionada (puedes establecer un valor predeterminado si lo deseas)
+    selected_option3.set(opciones3[0])
+
+
     calcular_button5 = tk.Button(marco_boton5, text="Calcular Volumen",
                                  command=lambda: reglaTresOctavosSimpson(radioCampo.get(),largoCampo.get(),intervalosCampo.get(),resultado_label5))
     calcular_button5.grid(row=14, column=5, columnspan=4)
@@ -197,6 +252,12 @@ def crearVentana():
 
     notebook.pack(fill="both", expand=True)
     ventana.mainloop()
+
+
+def on_select(event,combo):
+    # Use the get method on the StringVar to retrieve the selected option
+    selected_option = combo.get()
+    print(f"Seleccionado: {selected_option}")
 
 def calcular_temperatura(hora1,hora2,hora3,hora4,hora5,tmp1,tmp2,tmp3,tmp4,tmp5,horaBuscada,resultado_label):
     hora_interes1 = float(hora1)
