@@ -16,20 +16,27 @@ def crearVentana():
     pestaña2 = ttk.Frame(notebook)
     notebook.add(pestaña2, text="Economia")
 
-    etiqueta2 = tk.Label(pestaña2, text="Contenido de la Pestaña 2")
-    etiqueta2.pack()
 
-    pestaña3 = ttk.Frame(notebook)
-    notebook.add(pestaña3, text="Medicina")
+    pestaña4 = ttk.Frame(notebook)
+    notebook.add(pestaña4, text="Geologia")
 
-    etiqueta3 = tk.Label(pestaña3, text="Contenido de la Pestaña 3")
-    etiqueta3.pack()
+    pestaña5 = ttk.Frame(notebook)
+    notebook.add(pestaña5, text="Mediciones")
+
+    pestaña6 = ttk.Frame(notebook)
+    notebook.add(pestaña6, text="Viviendas")
+
 
     estilo = ttk.Style()
     estilo.configure("TNotebook.Tab", font=("Arial", 20))
 
     marco_boton = ttk.LabelFrame(pestaña1, text="Temperatura/horas", padding=10, width=100, height=150)
     marco_boton.pack(padx=10, pady=20, fill="both", expand=True)
+
+    marco_boton2 = ttk.LabelFrame(pestaña2, text="Tasa de interés efectiva a la tasa de interés compuesta de un préstamo o inversión ", padding=10, width=100, height=150)
+    marco_boton2.pack(padx=10, pady=20, fill="both", expand=True)
+
+
 
     etiqueta_hora = tk.Label(marco_boton, text="Ingrese la hora para estimar la temperatura:")
     etiqueta_hora.grid(row=0, column=0, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
@@ -82,6 +89,112 @@ def crearVentana():
     calcular_button = tk.Button(marco_boton, text="Calcular Temperatura", command=lambda: calcular_temperatura(hora1.get(),hora2.get(),hora3.get(),hora4.get(),hora5.get(),tmp1.get(),tmp2.get(),tmp3.get(),tmp4.get(),tmp5.get(), horaBuscada.get(),resultado_label))
     calcular_button.grid(row=9, column=0, columnspan=2)
 
+
+
+
+
+    #------ GEOLOGIA ----------
+
+    marco_boton4 = ttk.LabelFrame(pestaña4,
+                                  text="Distribución de la densidad del suelo",
+                                  padding=10, width=100, height=150)
+    marco_boton4.pack(padx=10, pady=20, fill="both", expand=True)
+
+    etiqueta_hora4 = tk.Label(marco_boton4, text="variaciones de las densidades")
+    etiqueta_hora4.grid(row=0, column=0, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
+
+
+
+    # Crear cuadros de texto sin bucle for
+    campo11 = tk.Entry(marco_boton4)
+    campo11.grid(row=2, column=0, padx=5, pady=5)
+
+    campo12 = tk.Entry(marco_boton4)
+    campo12.grid(row=3, column=0, padx=5, pady=5)
+
+    campo13 = tk.Entry(marco_boton4)
+    campo13.grid(row=4, column=0, padx=5, pady=5)
+
+
+    campo21 = tk.Entry(marco_boton4)
+    campo21.grid(row=2, column=1, padx=5, pady=5)
+
+    campo22 = tk.Entry(marco_boton4)
+    campo22.grid(row=3, column=1, padx=5, pady=5)
+
+    campo23 = tk.Entry(marco_boton4)
+    campo23.grid(row=4, column=1, padx=5, pady=5)
+
+
+    campo31 = tk.Entry(marco_boton4)
+    campo31.grid(row=2, column=4, padx=5, pady=5)
+
+    campo32 = tk.Entry(marco_boton4)
+    campo32.grid(row=3, column=4, padx=5, pady=5)
+
+    campo33 = tk.Entry(marco_boton4)
+    campo33.grid(row=4, column=4, padx=5, pady=5)
+
+    separator1 = ttk.Separator(marco_boton4, orient="vertical")
+    separator1.grid(row=2, column=3, rowspan=3, sticky="ns", padx=10)
+
+    campo41 = tk.Entry(marco_boton4)
+    campo41.grid(row=2, column=2, padx=5, pady=5)
+
+    campo42 = tk.Entry(marco_boton4)
+    campo42.grid(row=3, column=2, padx=5, pady=5)
+
+    campo43 = tk.Entry(marco_boton4)
+    campo43.grid(row=4, column=2, padx=5, pady=5)
+
+
+    resultado_label4 = tk.Label(marco_boton4, text="")
+    resultado_label4.grid(row=8, column=0, columnspan=2)
+
+    calcular_button4 = tk.Button(marco_boton4, text="Calcular Densidad",
+                                command=lambda: elimGauss(campo11.get(), campo12.get(), campo13.get(), campo21.get(),
+                                                                     campo22.get(), campo23.get(), campo31.get(), campo32.get(),campo33.get(),
+                                                                     campo41.get(), campo42.get(), campo43.get(),
+                                                                     resultado_label))
+    calcular_button4.grid(row=9, column=1, columnspan=2)
+
+    # ------ Mediciones ----------
+    marco_boton5 = ttk.LabelFrame(pestaña5,
+                                  text="Ingrese los datos",
+                                  padding=10, width=100, height=150)
+    marco_boton5.pack(padx=10, pady=20, fill="both", expand=True)
+
+    etiquetaRadio = tk.Label(marco_boton5, text="Radio del tanque")
+    etiquetaRadio.grid(row=0, column=5, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
+
+    # Crear cuadros de texto sin bucle for
+    radioCampo = tk.Entry(marco_boton5)
+    radioCampo.grid(row=2, column=5, padx=5, pady=5)
+
+    etiquetaLargo = tk.Label(marco_boton5, text="Largo del tanque")
+    etiquetaLargo.grid(row=4, column=5, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
+
+    # Crear cuadros de texto sin bucle for
+    largoCampo = tk.Entry(marco_boton5)
+    largoCampo.grid(row=5, column=5, padx=5, pady=5)
+
+    etiquetaIntervalos = tk.Label(marco_boton5, text="Numero de intervalos")
+    etiquetaIntervalos.grid(row=6, column=5, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
+
+    # Crear cuadros de texto sin bucle for
+    intervalosCampo = tk.Entry(marco_boton5)
+    intervalosCampo.grid(row=7, column=5, padx=5, pady=5)
+
+    resultado_label5 = tk.Label(marco_boton5, text="")
+    resultado_label5.grid(row=8, column=5, columnspan=4)
+
+    calcular_button5 = tk.Button(marco_boton5, text="Calcular Volumen",
+                                 command=lambda: reglaTresOctavosSimpson(radioCampo.get(),largoCampo.get(),intervalosCampo.get(),resultado_label5))
+    calcular_button5.grid(row=14, column=5, columnspan=4)
+
+
+
+
     notebook.pack(fill="both", expand=True)
     ventana.mainloop()
 
@@ -101,7 +214,7 @@ def calcular_temperatura(hora1,hora2,hora3,hora4,hora5,tmp1,tmp2,tmp3,tmp4,tmp5,
 
 
     # Datos de temperatura horaria (horas y temperaturas)
-    datos = [(hora_interes1, tmp_interes1), (hora_interes2, tmp_interes2), (hora_interes3, tmp_interes3), (hora_interes4, tmp_interes4), (tmp_interes5, tmp_interes5)]
+    datos = [(hora_interes1, tmp_interes1), (hora_interes2, tmp_interes2), (hora_interes3, tmp_interes3), (hora_interes4, tmp_interes4), (hora_interes5, tmp_interes5)]
 
     # Calcular las diferencias finitas hacia adelante
     n = len(datos)
@@ -128,7 +241,21 @@ def calcular_temperatura(hora1,hora2,hora3,hora4,hora5,tmp1,tmp2,tmp3,tmp4,tmp5,
         resultado += producto * tabla_diferencias[0][i]
     resultado_label.config(text=f"La temperatura estimada en la hora {horaIngresada} es {resultado:.2f} °C")
 
-def elimGauss():
+def elimGauss(campo11, campo12, campo13, campo21,campo22, campo23, campo31, campo32,campo33, campo41, campo42, campo43,resultado_label):
+    campo_11 = float(campo11)
+    campo_12 = float(campo12)
+    campo_13 = float(campo13)
+    campo_21 = float(campo21)
+    campo_22 = float(campo22)
+    campo_23 = float(campo23)
+    campo_31 = float(campo31)
+    campo_32 = float(campo32)
+    campo_33 = float(campo33)
+
+    campo_41 = float(campo41)
+    campo_42 = float(campo42)
+    campo_43 = float(campo43)
+
 
     # INGRESO DE DATOS-------------------------------
     # Se ingreserá primero los valores de la matriz y después los valores del vector según la forma Ax = B, escrita como arreglos.
@@ -136,20 +263,14 @@ def elimGauss():
     n = 3
     # La función np.zeros() es una función de la biblioteca NumPy en Python que se utiliza para crear un array() de ceros con las dimensiones especificadas.
     # En este caso la matriz A sera de 3x3, y el vector B de 3x1
-    A = np.zeros((m, n), dtype=float)
-    B = np.zeros((m, 1), dtype=float)
 
-    # Ciclo for para ingresar los coeficientes en la matriz
-    print("Introduce los coeficientes de la matriz:")
-    for r in range(m):
-        for c in range(n):
-            valorM = float(input(f"Ingrese el coeficiente para la pocisión [{r + 1},{c + 1}]: "))
-            A[r, c] = valorM
 
-    print("Introduce los valores del vector:")
-    for r in range(m):
-        valorV = float(input(f"Ingrese el valor para la pocisión {r + 1}: "))
-        B[r] = valorV
+    A = np.array([[campo_11, campo_21, campo_41],
+                  [campo_12, campo_22, campo_42],
+                  [campo_13, campo_23, campo_43]], dtype=float)
+
+    B = np.array([[campo_31], [campo_32], [campo_33]], dtype=float)
+
 
     # PROCEDIMIENTO-------------------------------
     casicero = 1e-15  # Considerar como 0
@@ -726,15 +847,21 @@ def NC_cerrada2():
 
     return res
 
-def reglaTresOctavosSimpson():
+def reglaTresOctavosSimpson(radio,largo,intervalos,resultado_label):
+
+    radioCampo = float(radio)
+    largoCampo = int(largo)
+    intervalosCampo = int(intervalos)
+
+
     # limite inferior de la integral
     a = 0
     # limite superior de la integral
-    b = 1
+    b = largoCampo
     # radio del tanque cilíndrico
-    r = 2.5
+    r = radioCampo
     # cantidad de subintervalos
-    n = 4
+    n = intervalosCampo
 
     """
     La forma de la integral es /a-b pi(r(x))^2 dx
@@ -759,7 +886,7 @@ def reglaTresOctavosSimpson():
 
     # cálculo con la formula de la regla trapezoidal
     res = (3 / 8) * h * (fa + 3 * fsum + fb)
-
+    resultado_label.config(text=f"El volumen es :  {res} ")
     print(res)
     return res
 
@@ -803,7 +930,6 @@ def reglaTercioSimpson():
     res = (h / 3) * (fa + 4 * f_impar + 2 * f_par + fb)
     print(res)
     return res
-
 
 def reglaTrapezoidal():
     # limite inferior de la integral
