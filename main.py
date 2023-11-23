@@ -4,13 +4,17 @@ import numpy as np
 import math
 from datetime import datetime
 
-opcionSeleccionada = ''
+import pandas as pd
+from matplotlib import pyplot as plt
 
+opcionSeleccionada = ''
+func = lambda t,y:(-t*y)
 
 def crearVentana():
+
     ventana = tk.Tk()
     ventana.title("Metodos Numericos - Dashboard")
-    ventana.geometry("800x600")
+    ventana.geometry("2000x6000")
 
     notebook = ttk.Notebook(ventana)
 
@@ -27,110 +31,122 @@ def crearVentana():
     notebook.add(pestaña5, text="Volumen")
 
     pestaña6 = ttk.Frame(notebook)
-    notebook.add(pestaña6, text="Viviendas")
+    notebook.add(pestaña6, text="Temperatura")
 
     estilo = ttk.Style()
-    estilo.configure("TNotebook.Tab", font=("Arial", 20))
+    estilo.configure("TNotebook.Tab", font=("Arial", 40))
 
-    marco_boton = ttk.LabelFrame(pestaña1, text="Temperatura/horas", padding=10, width=100, height=150)
+    # Crear estilo para el LabelFrame con título más grande
+    estilo_label_frame = ttk.Style()
+    estilo_label_frame.configure("Estilo.TLabelframe", font=("Arial", 20))
+
+    # Crear marco con LabelFrame y título más grande usando el estilo
+    marco_boton = ttk.LabelFrame(pestaña1, text="Temperatura/horas", padding=10, width=100, height=150,
+                                 style="Estilo.TLabelframe")
     marco_boton.pack(padx=10, pady=20, fill="both", expand=True)
 
-    marco_boton2 = ttk.LabelFrame(pestaña2, text="Prediccion teorica de ventas de un producto ", padding=10, width=100,
-                                  height=150)
+    # Crear estilo para el LabelFrame con título más grande
+    estilo_label_frame = ttk.Style()
+    estilo_label_frame.configure("Estilo.TLabelframe.Label", font=("Arial",20))
+
+    # Crear marco con LabelFrame y título más grande usando el estilo
+    marco_boton2 = ttk.LabelFrame(pestaña2, text="Predicción teórica de ventas de un producto", padding=10, width=200,
+                                  height=150, style="Estilo.TLabelframe")
     marco_boton2.pack(padx=10, pady=20, fill="both", expand=True)
 
-    etiqueta_columna_tmp2 = tk.Label(marco_boton2, text="Mes")
+    etiqueta_columna_tmp2 = tk.Label(marco_boton2, text="Mes",font=("Arial", 50))
     etiqueta_columna_tmp2.grid(row=1, column=0, padx=5, pady=5)
 
-    etiqueta_columna_tmp3 = tk.Label(marco_boton2, text="Mes a predecir")
+    etiqueta_columna_tmp3 = tk.Label(marco_boton2, text="Mes a predecir",font=("Arial", 20))
     etiqueta_columna_tmp3.grid(row=11, column=0, padx=5, pady=5)
 
-    etiqueta_columna_tmp2 = tk.Label(marco_boton2, text="Ventas")
+    etiqueta_columna_tmp2 = tk.Label(marco_boton2, text="Ventas",font=("Arial", 50))
     etiqueta_columna_tmp2.grid(row=1, column=2, padx=5, pady=5)
 
-    meses = tk.Entry(marco_boton2)
+    meses = tk.Entry(marco_boton2,font=("Arial", 20))
     meses.grid(row=6, column=0, padx=5, pady=5)
 
-    meses2 = tk.Entry(marco_boton2)
+    meses2 = tk.Entry(marco_boton2,font=("Arial", 20))
     meses2.grid(row=7, column=0, padx=5, pady=5)
 
-    meses3 = tk.Entry(marco_boton2)
+    meses3 = tk.Entry(marco_boton2,font=("Arial", 20))
     meses3.grid(row=8, column=0, padx=5, pady=5)
 
-    meses4 = tk.Entry(marco_boton2)
+    meses4 = tk.Entry(marco_boton2,font=("Arial", 20))
     meses4.grid(row=9, column=0, padx=5, pady=5)
 
-    meses5 = tk.Entry(marco_boton2)
+    meses5 = tk.Entry(marco_boton2,font=("Arial", 20))
     meses5.grid(row=10, column=0, padx=5, pady=5)
 
-    ventas = tk.Entry(marco_boton2)
+    ventas = tk.Entry(marco_boton2,font=("Arial", 20))
     ventas.grid(row=6, column=2, padx=5, pady=5)
 
-    ventas2 = tk.Entry(marco_boton2)
+    ventas2 = tk.Entry(marco_boton2,font=("Arial", 20))
     ventas2.grid(row=7, column=2, padx=5, pady=5)
 
-    ventas3 = tk.Entry(marco_boton2)
+    ventas3 = tk.Entry(marco_boton2,font=("Arial", 20))
     ventas3.grid(row=8, column=2, padx=5, pady=5)
 
-    ventas4 = tk.Entry(marco_boton2)
+    ventas4 = tk.Entry(marco_boton2,font=("Arial", 20))
     ventas4.grid(row=9, column=2, padx=5, pady=5)
 
-    ventas5 = tk.Entry(marco_boton2)
+    ventas5 = tk.Entry(marco_boton2,font=("Arial", 20))
     ventas5.grid(row=10, column=2, padx=5, pady=5)
 
-    ventaPredecir = tk.Entry(marco_boton2)
+    ventaPredecir = tk.Entry(marco_boton2,font=("Arial", 20))
     ventaPredecir.grid(row=11, column=2, padx=5, pady=5)
 
+    # Crear el botón con texto más grande
     calcular_ventas = tk.Button(marco_boton2, text="Predecir ventas", command=lambda: minimosCuadrados(
-        meses.get(), meses2.get(), meses3.get(), meses4.get(), meses5.get(), ventas.get(), ventas2.get(), ventas3.get()
-        , ventas4.get(), ventas5.get(), ventaPredecir.get()));
+        meses.get()
+    ), width=20, height=2, font=("Arial", 16))  # Ajusta el valor de font según tus necesidades
     calcular_ventas.grid(row=12, column=0, columnspan=2)
 
-    etiqueta_hora = tk.Label(marco_boton, text="Ingrese la hora para estimar la temperatura:")
+    etiqueta_hora = tk.Label(marco_boton, text="Ingrese la hora para estimar la temperatura:",font=("Arial", 20))
     etiqueta_hora.grid(row=0, column=0, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
 
     # Crear etiquetas para las columnas
-    etiqueta_columna_hora = tk.Label(marco_boton, text="Hora")
+    etiqueta_columna_hora = tk.Label(marco_boton, text="Hora", font=("Arial", 30))
     etiqueta_columna_hora.grid(row=1, column=0, padx=5, pady=5)
 
-    etiqueta_columna_tmp = tk.Label(marco_boton, text="Temperatura")
+    etiqueta_columna_tmp = tk.Label(marco_boton, text="Temperatura" ,font=("Arial", 30) )
     etiqueta_columna_tmp.grid(row=1, column=1, padx=5, pady=5)
 
     # Crear cuadros de texto sin bucle for
-    hora1 = tk.Entry(marco_boton)
+    hora1 = tk.Entry(marco_boton,font=("Arial", 20))
     hora1.grid(row=2, column=0, padx=5, pady=5)
 
-    hora2 = tk.Entry(marco_boton)
+    hora2 = tk.Entry(marco_boton,font=("Arial", 20))
     hora2.grid(row=3, column=0, padx=5, pady=5)
 
-    hora3 = tk.Entry(marco_boton)
+    hora3 = tk.Entry(marco_boton,font=("Arial", 20))
     hora3.grid(row=4, column=0, padx=5, pady=5)
 
-    hora4 = tk.Entry(marco_boton)
+    hora4 = tk.Entry(marco_boton,font=("Arial", 20))
     hora4.grid(row=5, column=0, padx=5, pady=5)
 
-    hora5 = tk.Entry(marco_boton)
+    hora5 = tk.Entry(marco_boton,font=("Arial", 20))
     hora5.grid(row=6, column=0, padx=5, pady=5)
 
-    tmp1 = tk.Entry(marco_boton)
+    tmp1 = tk.Entry(marco_boton,font=("Arial", 20))
     tmp1.grid(row=2, column=1, padx=5, pady=5)
 
-    tmp2 = tk.Entry(marco_boton)
+    tmp2 = tk.Entry(marco_boton,font=("Arial", 20))
     tmp2.grid(row=3, column=1, padx=5, pady=5)
 
-    tmp3 = tk.Entry(marco_boton)
+    tmp3 = tk.Entry(marco_boton,font=("Arial", 20))
     tmp3.grid(row=4, column=1, padx=5, pady=5)
 
-    tmp4 = tk.Entry(marco_boton)
+    tmp4 = tk.Entry(marco_boton,font=("Arial", 20))
     tmp4.grid(row=5, column=1, padx=5, pady=5)
 
-    tmp5 = tk.Entry(marco_boton)
+    tmp5 = tk.Entry(marco_boton,font=("Arial", 20))
     tmp5.grid(row=6, column=1, padx=5, pady=5)
 
-    horaBuscada = tk.Entry(marco_boton)
+    horaBuscada = tk.Entry(marco_boton,font=("Arial", 20))
     horaBuscada.grid(row=7, column=0, columnspan=2, pady=10)
 
-    resultado_label = tk.Label(marco_boton, text="")
+    resultado_label = tk.Label(marco_boton, text="",font=("Arial", 20))
     resultado_label.grid(row=8, column=0, columnspan=2)
 
     # Crear las opciones para el combobox
@@ -154,14 +170,14 @@ def crearVentana():
                                 command=lambda: calcular_temperatura(hora1.get(), hora2.get(), hora3.get(), hora4.get(),
                                                                      hora5.get(), tmp1.get(), tmp2.get(), tmp3.get(),
                                                                      tmp4.get(), tmp5.get(), horaBuscada.get(),
-                                                                     resultado_label))
+                                                                     resultado_label),width=20, height=2,font=("Arial", 20))
     calcular_button.grid(row=9, column=0, columnspan=2)
 
     # ------ GEOLOGIA ----------
 
     marco_boton4 = ttk.LabelFrame(pestaña4,
                                   text="Distribución de la densidad del suelo",
-                                  padding=10, width=100, height=150)
+                                  padding=10, width=100, height=150,style="Estilo.TLabelframe")
     marco_boton4.pack(padx=10, pady=20, fill="both", expand=True)
 
     etiqueta_hora4 = tk.Label(marco_boton4, text="variaciones de las densidades")
@@ -269,7 +285,35 @@ def crearVentana():
                                                                          intervalosCampo.get(), resultado_label5))
     calcular_button5.grid(row=14, column=5, columnspan=4)
 
+
+
+    #-------- TEMPERATURA ----------
+    # Crear marco con LabelFrame y título más grande usando el estilo
+    marco_botonA = ttk.LabelFrame(pestaña6, text="Estimacion de la variacion en la temperatura de un cuerpo en funcion del tiempo", padding=10, width=200,
+                                  height=150, style="Estilo.TLabelframe")
+    marco_botonA.pack(padx=10, pady=20, fill="both", expand=True)
+    # Crear cuadros de texto sin bucle for
+    campoYO = tk.Entry(marco_botonA)
+    campoYO.grid(row=2, column=0, padx=5, pady=5)
+
+    campoH = tk.Entry(marco_botonA)
+    campoH.grid(row=3, column=0, padx=5, pady=5)
+
+    campoTf= tk.Entry(marco_botonA)
+    campoTf.grid(row=4, column=0, padx=5, pady=5)
+    resultado_label5 = tk.Label(marco_botonA, text="")
+    resultado_label5.grid(row=8, column=5, columnspan=4)
+
+    calcularVariacionButton = tk.Button(marco_botonA, text="Calcular Variacion",
+                                 command=lambda: reglaTresOctavosSimpson(radioCampo.get(), largoCampo.get(),
+                                                                         intervalosCampo.get(), resultado_label5))
+    calcularVariacionButton.grid(row=14, column=5, columnspan=4)
+
     notebook.pack(fill="both", expand=True)
+    mcLinFunc()
+
+
+
     ventana.mainloop()
 
 
@@ -1080,8 +1124,416 @@ def reglaTrapezoidal():
     print(res)
     return res
 
+#PROCEDIMIENTO EULER MODIFICADO
+def eulerm(f, to, yo, h, tf):
+    #Parámetros:
+    #f = edo
+    #to = tiempo inicial
+    #yo = temperatura inicial
+    #h = paso del tiempo
+    #tf = tiempo final
+    y = [yo]  #El primer valor de y en la lista es yo
+    t = [to]  #El primer valor de t en la lista es to
+    n = int((tf-to)/h) #Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
+    for i in range (1, n+1):
+        ti = t[i-1]
+        yi = y[i-1]
+        yim = yi+(h*f(ti, yi))
+        yi = yi+(h/2)*(f(ti+h, yim+f(ti, yi))) #Fórmula de Euler modificado
+        t.append(ti+h) #Se agrega el valor de t a la lista
+        y.append(yi) #Se agrega el valor de y a la lista
+    return (t, y)
+
+
+def mcCuadFunc():
+    # Lectura de base de datos
+    tabla = pd.read_csv("2021_10_EstMeteorologica.csv", header=0, decimal=',')
+    n = len(tabla)  # Numero de filas de la tabla
+
+    # Conversor de formato hora a decimal de la tabla
+    horaformato = "%H:%M:%S"
+    tabla['Time'] = pd.to_datetime(tabla['Time'], format=horaformato)
+    horadia = tabla['Time'].dt.hour
+    horamin = tabla['Time'].dt.minute
+    horaseg = tabla['Time'].dt.second
+    tabla['horadec'] = horadia + horamin / 60 + horaseg / 3600
+    x = tabla['horadec']
+    y = tabla['TEMP']
+
+    # REGRESION MC LINEAL CON FUNCION
+    sum1 = x.sum()
+    sum2 = (x ** 2).sum()
+    sum3 = y.sum()
+    sum4 = (x * y).sum()
+    sum5 = (x ** 3).sum()
+    sum6 = (x ** 4).sum()
+    sum7 = ((x ** 2) * y).sum()
+    f = np.sin(x)
+    sum11 = np.sum(f)
+    sum12 = np.sum(x * f)
+    sum13 = np.sum(f ** 2)
+    sum14 = np.sum(y * f)
+    sum15 = np.sum((x ** 2) * f)
+
+    A = np.array([
+        [n, sum1, sum2, sum11],
+        [sum1, sum2, sum5, sum12],
+        [sum2, sum5, sum6, sum15],
+        [sum11, sum12, sum15, sum13]
+    ])
+
+    B = np.array([
+        [sum3],
+        [sum4],
+        [sum7],
+        [sum14]
+    ])
+
+    C = np.linalg.solve(A, B)
+    a0 = C[0]
+    a1 = C[1]
+    a2 = C[2]
+    a3 = C[3]
+
+    gx = (a0 + a1 * x + a2 * (x ** 2) + a3 * f)
+
+    print(gx)
+
+    # GRAFICA
+    plt.scatter(x, y, label='Datos originales')
+    plt.plot(x, gx, color='red', label='Regresión Lineal con Función')
+    plt.xlabel('Hora')
+    plt.ylabel('Temperatura')
+    plt.title('Regresión Lineal con Función')
+    plt.legend()
+    plt.show()
+
+def mcCuadr():
+    # Lectura de base de datos
+    tabla = pd.read_csv("2021_10_EstMeteorologica.csv", header=0, decimal=',')
+    n = len(tabla)  # Numero de filas de la tabla
+
+    # Conversor de formato hora a decimal de la tabla
+    horaformato = "%H:%M:%S"
+    tabla['Time'] = pd.to_datetime(tabla['Time'], format=horaformato)
+    horadia = tabla['Time'].dt.hour
+    horamin = tabla['Time'].dt.minute
+    horaseg = tabla['Time'].dt.second
+    tabla['horadec'] = horadia + horamin / 60 + horaseg / 3600
+    x = tabla['horadec']
+    y = tabla['TEMP']
+
+    # REGRESION MC CUADRATICA
+    sum1 = x.sum()
+    sum2 = (x ** 2).sum()
+    sum3 = y.sum()
+    sum4 = (x * y).sum()
+    sum5 = (x ** 3).sum()
+    sum6 = (x ** 4).sum()
+    sum7 = ((x ** 2) * y).sum()
+
+    A = np.array([
+        [n, sum1, sum2],
+        [sum1, sum2, sum5],
+        [sum2, sum5, sum6]
+    ])
+
+    B = np.array([
+        [sum3],
+        [sum4],
+        [sum7]
+    ])
+
+    C = np.linalg.solve(A, B)
+    a0 = C[0]
+    a1 = C[1]
+    a2 = C[2]
+
+    gx = (a0 + a1 * x + a2 * (x ** 2))
+
+    print(gx)
+
+    # GRAFICA
+    plt.scatter(x, y, label='Datos originales')
+    plt.plot(x, gx, color='red', label='Regresión Cuadrática')
+    plt.xlabel('Hora')
+    plt.ylabel('Temperatura')
+    plt.title('Regresión Cuadrática')
+    plt.legend()
+    plt.show()
+
+def mcCubica():
+    # Lectura de base de datos
+    tabla = pd.read_csv("2021_10_EstMeteorologica.csv", header=0, decimal=',')
+    n = len(tabla)  # Numero de filas de la tabla
+
+    # Conversor de formato hora a decimal de la tabla
+    horaformato = "%H:%M:%S"
+    tabla['Time'] = pd.to_datetime(tabla['Time'], format=horaformato)
+    horadia = tabla['Time'].dt.hour
+    horamin = tabla['Time'].dt.minute
+    horaseg = tabla['Time'].dt.second
+    tabla['horadec'] = horadia + horamin / 60 + horaseg / 3600
+    x = tabla['horadec']
+    y = tabla['TEMP']
+
+    # REGRESION MC CUBICA
+    sum1 = x.sum()
+    sum2 = (x ** 2).sum()
+    sum3 = y.sum()
+    sum4 = (x * y).sum()
+    sum5 = (x ** 3).sum()
+    sum6 = (x ** 4).sum()
+    sum7 = ((x ** 2) * y).sum()
+    sum8 = (x ** 5).sum()
+    sum9 = (x ** 6).sum()
+    sum10 = ((x ** 3) * y).sum()
+
+    A = np.array([
+        [n, sum1, sum2, sum5],
+        [sum1, sum2, sum5, sum6],
+        [sum2, sum5, sum6, sum8],
+        [sum5, sum6, sum8, sum9]
+    ])
+
+    B = np.array([
+        [sum3],
+        [sum4],
+        [sum7],
+        [sum10]
+    ])
+
+    C = np.linalg.solve(A, B)
+    a0 = C[0]
+    a1 = C[1]
+    a2 = C[2]
+    a3 = C[3]
+
+    gx = (a0 + a1 * x + a2 * (x ** 2) + a3 * (x ** 3))
+
+    print(gx)
+
+    # GRAFICA
+    plt.scatter(x, y, label='Datos originales')
+    plt.plot(x, gx, color='red', label='Regresión Cúbica')
+    plt.xlabel('Hora')
+    plt.ylabel('Temperatura')
+    plt.title('Regresión Cúbica')
+    plt.legend()
+    plt.show()
+
+def mcLinFunc():
+    # Lectura de base de datos
+    tabla = pd.read_csv("2021_10_EstMeteorologica.csv", header=0, decimal=',')
+    n = len(tabla)  # Numero de filas de la tabla
+
+    # Conversor de formato hora a decimal de la tabla
+    horaformato = "%H:%M:%S"
+    tabla['Time'] = pd.to_datetime(tabla['Time'], format=horaformato)
+    horadia = tabla['Time'].dt.hour
+    horamin = tabla['Time'].dt.minute
+    horaseg = tabla['Time'].dt.second
+    tabla['horadec'] = horadia + horamin / 60 + horaseg / 3600
+    x = tabla['horadec']
+    y = tabla['TEMP']
+
+    # REGRESION MC LINEAL CON FUNCION
+    sum1 = x.sum()
+    sum2 = (x ** 2).sum()
+    sum3 = y.sum()
+    sum4 = (x * y).sum()
+    f = np.sin(x)
+    sum11 = np.sum(f)
+    sum12 = np.sum(x * f)
+    sum13 = np.sum(f ** 2)
+    sum14 = np.sum(y * f)
+
+    A = np.array([
+        [n, sum1, sum11],
+        [sum1, sum2, sum12],
+        [sum11, sum12, sum13]
+    ])
+
+    B = np.array([
+        [sum3],
+        [sum4],
+        [sum14]
+    ])
+
+    C = np.linalg.solve(A, B)
+    a0 = C[0]
+    a1 = C[1]
+    a2 = C[2]
+
+    gx = (a0 + a1 * x + a2 * f)
+
+    # Ajusta el tamaño de la figura
+    plt.figure(figsize=(10, 6))  # Puedes ajustar las dimensiones según tus preferencias
+
+    print(gx)
+
+    # GRAFICA
+    plt.scatter(x, y, label='Datos originales')
+    plt.plot(x, gx, color='red', label='Regresión Lineal con Función')
+    plt.xlabel('Hora')
+    plt.ylabel('Temperatura')
+    plt.title('Regresión Lineal con Función')
+    plt.legend()
+    plt.show()
+
+def mcLinRec():
+    # Lectura de base de datos
+    tabla = pd.read_csv("2021_10_EstMeteorologica.csv", header=0, decimal=',')
+    n = len(tabla)  # Numero de filas de la tabla
+
+    # Conversor de formato hora a decimal de la tabla
+    horaformato = "%H:%M:%S"
+    tabla['Time'] = pd.to_datetime(tabla['Time'], format=horaformato)
+    horadia = tabla['Time'].dt.hour
+    horamin = tabla['Time'].dt.minute
+    horaseg = tabla['Time'].dt.second
+    tabla['horadec'] = horadia + horamin / 60 + horaseg / 3600
+    x = tabla['horadec']
+    y = tabla['TEMP']
+
+    # REGRESION MC LINEA RECTA
+    sum1 = x.sum()
+    sum2 = (x ** 2).sum()
+    sum3 = y.sum()
+    sum4 = (x * y).sum()
+
+    A = np.array([
+        [n, sum1],
+        [sum1, sum2]
+    ])
+
+    B = np.array([
+        [sum3],
+        [sum4]
+    ])
+
+    C = np.linalg.solve(A, B)
+    a0 = C[0]
+    a1 = C[1]
+
+    gx = (a0 + a1 * x)
+
+    print(gx)
+
+    # GRAFICA
+    plt.scatter(x, y, label='Datos originales')
+    plt.plot(x, gx, color='red', label='Regresión lineal')
+    plt.xlabel('Hora')
+    plt.ylabel('Temperatura')
+    plt.title('Regresión Lineal')
+    plt.legend()
+    plt.show()
+
+def RK20():
+    # PROCEDIMIENTO EULER MODIFICADO
+    def rk2Ord(f, to, yo, h, tf):
+        # Parámetros:
+        # f = edo
+        # to = tiempo inicial
+        # yo = temperatura inicial
+        # h = paso del tiempo
+        # tf = tiempo final
+        y = [yo]  # El primer valor de y en la lista es yo
+        t = [to]  # El primer valor de t en la lista es to
+        n = int((
+                            tf - to) / h)  # Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
+        for i in range(1, n + 1):
+            ti = t[i - 1]
+            yi = y[i - 1]
+            k1 = f(ti, yi)
+            k2 = h * (f(ti + h, yi + k1))
+            t.append(ti + h)
+            y.append(yi + 1 / 2 * (k1 + k2))
+        return (t, y)
+
+def RK30():
+    # PROCEDIMIENTO EULER MODIFICADO
+    def rk3Ord(f, to, yo, h, tf):
+        # Parámetros:
+        # f = edo
+        # to = tiempo inicial
+        # yo = temperatura inicial
+        # h = paso del tiempo
+        # tf = tiempo final
+        y = [yo]  # El primer valor de y en la lista es yo
+        t = [to]  # El primer valor de t en la lista es to
+        n = int((
+                            tf - to) / h)  # Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
+        for i in range(1, n + 1):
+            ti = t[i - 1]
+            yi = y[i - 1]
+            k1 = f(ti, yi)
+            k2 = h * (f(ti + h, yi + k1))
+            k3 = h * (f(ti + h, yi - k1 + 2 * k2))
+            t.append(ti + h)
+            y.append(yi + 1 / 6 * (k1 + 4 * k2 + k3))
+        return (t, y)
+
+def RK40Y13():
+    # PROCEDIMIENTO EULER MODIFICADO
+    def rk13sim(f, to, yo, h, tf):
+        # Parámetros:
+        # f = edo
+        # to = tiempo inicial
+        # yo = temperatura inicial
+        # h = paso del tiempo
+        # tf = tiempo final
+        y = [yo]  # El primer valor de y en la lista es yo
+        t = [to]  # El primer valor de t en la lista es to
+        n = int((
+                            tf - to) / h)  # Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
+        for i in range(1, n + 1):
+            ti = t[i - 1]
+            yi = y[i - 1]
+            k1 = f(ti, yi)
+            k2 = h * (f(ti + h / 2, yi + 1 / 2 * k1))
+            k3 = h * (f(ti + h / 2, yi + 1 / 2 * k2))
+            k4 = h * (f(ti + h, yi + k3))
+            t.append(ti + h)
+            y.append(yi + 1 / 6 * (k1 + 2 * k2 - 2 * k3 + k4))
+        return (t, y)
+
+def rk38sim(f, to, yo, h, tf):
+    #Parámetros:
+    #f = edo
+    #to = tiempo inicial
+    #yo = temperatura inicial
+    #h = paso del tiempo
+    #tf = tiempo final
+    y = [yo]  #El primer valor de y en la lista es yo
+    t = [to]  #El primer valor de t en la lista es to
+    n = int((tf-to)/h) #Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
+    for i in range (1, n+1):
+        ti = t[i-1]
+        yi = y[i-1]
+        k1 = f(ti,yi)
+        k2 = h*(f(ti+h/3,yi+1/3*k1))
+        k3 = h*(f(ti+2/3*h,yi+1/3*k1+1/3*k2))
+        k4 = h*(f(ti+h,yi+k1-k2+k3))
+        t.append(ti+h)
+        y.append(yi+1/8*(k1+3*k2-3*k3+k4))
+    return (t, y)
 
 crearVentana()
+
+#INGRESO DE PARÁMETROS
+to = 0
+yo = float(input(f"Ingrese la temperatura inicial del cuerpo: "))
+h = float(input(f"Ingrese la cantidad de paso del tiempo: "))
+tf = float(input(f"Ingrese el tiempo final: "))
+
+t,ye = rk38sim(func, to, yo, h, tf)
+
+#RESULTADOS
+t = np.transpose([t])
+ye = np.transpose([ye])
+print(t)
+print(ye)
 
 
 
