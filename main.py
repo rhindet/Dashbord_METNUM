@@ -2,6 +2,10 @@ import tkinter as tk
 from tkinter import ttk
 import numpy as np
 import math
+from datetime import datetime
+
+opcionSeleccionada = ''
+
 
 def crearVentana():
     ventana = tk.Tk()
@@ -14,18 +18,16 @@ def crearVentana():
     notebook.add(pestaña1, text="Clima")
 
     pestaña2 = ttk.Frame(notebook)
-    notebook.add(pestaña2, text="Economia")
-
+    notebook.add(pestaña2, text="Ventas")
 
     pestaña4 = ttk.Frame(notebook)
     notebook.add(pestaña4, text="Geologia")
 
     pestaña5 = ttk.Frame(notebook)
-    notebook.add(pestaña5, text="Mediciones")
+    notebook.add(pestaña5, text="Volumen")
 
     pestaña6 = ttk.Frame(notebook)
     notebook.add(pestaña6, text="Viviendas")
-
 
     estilo = ttk.Style()
     estilo.configure("TNotebook.Tab", font=("Arial", 20))
@@ -33,10 +35,56 @@ def crearVentana():
     marco_boton = ttk.LabelFrame(pestaña1, text="Temperatura/horas", padding=10, width=100, height=150)
     marco_boton.pack(padx=10, pady=20, fill="both", expand=True)
 
-    marco_boton2 = ttk.LabelFrame(pestaña2, text="Tasa de interés efectiva a la tasa de interés compuesta de un préstamo o inversión ", padding=10, width=100, height=150)
+    marco_boton2 = ttk.LabelFrame(pestaña2, text="Prediccion teorica de ventas de un producto ", padding=10, width=100,
+                                  height=150)
     marco_boton2.pack(padx=10, pady=20, fill="both", expand=True)
 
+    etiqueta_columna_tmp2 = tk.Label(marco_boton2, text="Mes")
+    etiqueta_columna_tmp2.grid(row=1, column=0, padx=5, pady=5)
 
+    etiqueta_columna_tmp3 = tk.Label(marco_boton2, text="Mes a predecir")
+    etiqueta_columna_tmp3.grid(row=11, column=0, padx=5, pady=5)
+
+    etiqueta_columna_tmp2 = tk.Label(marco_boton2, text="Ventas")
+    etiqueta_columna_tmp2.grid(row=1, column=2, padx=5, pady=5)
+
+    meses = tk.Entry(marco_boton2)
+    meses.grid(row=6, column=0, padx=5, pady=5)
+
+    meses2 = tk.Entry(marco_boton2)
+    meses2.grid(row=7, column=0, padx=5, pady=5)
+
+    meses3 = tk.Entry(marco_boton2)
+    meses3.grid(row=8, column=0, padx=5, pady=5)
+
+    meses4 = tk.Entry(marco_boton2)
+    meses4.grid(row=9, column=0, padx=5, pady=5)
+
+    meses5 = tk.Entry(marco_boton2)
+    meses5.grid(row=10, column=0, padx=5, pady=5)
+
+    ventas = tk.Entry(marco_boton2)
+    ventas.grid(row=6, column=2, padx=5, pady=5)
+
+    ventas2 = tk.Entry(marco_boton2)
+    ventas2.grid(row=7, column=2, padx=5, pady=5)
+
+    ventas3 = tk.Entry(marco_boton2)
+    ventas3.grid(row=8, column=2, padx=5, pady=5)
+
+    ventas4 = tk.Entry(marco_boton2)
+    ventas4.grid(row=9, column=2, padx=5, pady=5)
+
+    ventas5 = tk.Entry(marco_boton2)
+    ventas5.grid(row=10, column=2, padx=5, pady=5)
+
+    ventaPredecir = tk.Entry(marco_boton2)
+    ventaPredecir.grid(row=11, column=2, padx=5, pady=5)
+
+    calcular_ventas = tk.Button(marco_boton2, text="Predecir ventas", command=lambda: minimosCuadrados(
+        meses.get(), meses2.get(), meses3.get(), meses4.get(), meses5.get(), ventas.get(), ventas2.get(), ventas3.get()
+        , ventas4.get(), ventas5.get(), ventaPredecir.get()));
+    calcular_ventas.grid(row=12, column=0, columnspan=2)
 
     etiqueta_hora = tk.Label(marco_boton, text="Ingrese la hora para estimar la temperatura:")
     etiqueta_hora.grid(row=0, column=0, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
@@ -79,7 +127,6 @@ def crearVentana():
     tmp5 = tk.Entry(marco_boton)
     tmp5.grid(row=6, column=1, padx=5, pady=5)
 
-
     horaBuscada = tk.Entry(marco_boton)
     horaBuscada.grid(row=7, column=0, columnspan=2, pady=10)
 
@@ -87,7 +134,8 @@ def crearVentana():
     resultado_label.grid(row=8, column=0, columnspan=2)
 
     # Crear las opciones para el combobox
-    opciones2 = ["Interpolación lineal", "Newton Hacia Adelante", "Newton Hacia Atrás", "Newton Diferencias Divididas", "Lagrange"]
+    opciones2 = ["Interpolación lineal", "Newton Hacia Adelante", "Newton Hacia Atrás", "Newton Diferencias Divididas",
+                 "Lagrange"]
 
     # Crear un StringVar para almacenar la opción seleccionada
     selected_option2 = tk.StringVar()
@@ -102,15 +150,14 @@ def crearVentana():
     # Inicializar la opción seleccionada (puedes establecer un valor predeterminado si lo deseas)
     selected_option2.set(opciones2[0])
 
-
-    calcular_button = tk.Button(marco_boton, text="Calcular Temperatura", command=lambda: calcular_temperatura(hora1.get(),hora2.get(),hora3.get(),hora4.get(),hora5.get(),tmp1.get(),tmp2.get(),tmp3.get(),tmp4.get(),tmp5.get(), horaBuscada.get(),resultado_label))
+    calcular_button = tk.Button(marco_boton, text="Calcular Temperatura",
+                                command=lambda: calcular_temperatura(hora1.get(), hora2.get(), hora3.get(), hora4.get(),
+                                                                     hora5.get(), tmp1.get(), tmp2.get(), tmp3.get(),
+                                                                     tmp4.get(), tmp5.get(), horaBuscada.get(),
+                                                                     resultado_label))
     calcular_button.grid(row=9, column=0, columnspan=2)
 
-
-
-
-
-    #------ GEOLOGIA ----------
+    # ------ GEOLOGIA ----------
 
     marco_boton4 = ttk.LabelFrame(pestaña4,
                                   text="Distribución de la densidad del suelo",
@@ -119,8 +166,6 @@ def crearVentana():
 
     etiqueta_hora4 = tk.Label(marco_boton4, text="variaciones de las densidades")
     etiqueta_hora4.grid(row=0, column=0, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
-
-
 
     # Crear cuadros de texto sin bucle for
     campo11 = tk.Entry(marco_boton4)
@@ -132,7 +177,6 @@ def crearVentana():
     campo13 = tk.Entry(marco_boton4)
     campo13.grid(row=4, column=0, padx=5, pady=5)
 
-
     campo21 = tk.Entry(marco_boton4)
     campo21.grid(row=2, column=1, padx=5, pady=5)
 
@@ -141,7 +185,6 @@ def crearVentana():
 
     campo23 = tk.Entry(marco_boton4)
     campo23.grid(row=4, column=1, padx=5, pady=5)
-
 
     campo31 = tk.Entry(marco_boton4)
     campo31.grid(row=2, column=4, padx=5, pady=5)
@@ -165,12 +208,10 @@ def crearVentana():
     campo43.grid(row=4, column=2, padx=5, pady=5)
 
     # Crear las opciones para el combobox
-    opciones = ["Eliminación Gaussiana", "Gauss-Jordan", "Montante", "Gauss-Seidel","Jacobi"]
+    opciones = ["Eliminación Gaussiana", "Gauss-Jordan", "Montante", "Gauss-Seidel", "Jacobi"]
 
     # Crear un StringVar para almacenar la opción seleccionada
     selected_option = tk.StringVar()
-
-
 
     # Crear el combobox y asociar las opciones y el StringVar
     combo = ttk.Combobox(marco_boton4, textvariable=selected_option, values=opciones, state="normal")
@@ -182,17 +223,15 @@ def crearVentana():
     # Inicializar la opción seleccionada (puedes establecer un valor predeterminado si lo deseas)
     selected_option.set(opciones[0])
 
-
-
-
     resultado_label4 = tk.Label(marco_boton4, text="")
     resultado_label4.grid(row=8, column=0, columnspan=2)
 
     calcular_button4 = tk.Button(marco_boton4, text="Calcular Densidad",
-                                command=lambda: elimGauss(campo11.get(), campo12.get(), campo13.get(), campo21.get(),
-                                                                     campo22.get(), campo23.get(), campo31.get(), campo32.get(),campo33.get(),
-                                                                     campo41.get(), campo42.get(), campo43.get(),
-                                                                     resultado_label))
+                                 command=lambda: elimGauss(campo11.get(), campo12.get(), campo13.get(), campo21.get(),
+                                                           campo22.get(), campo23.get(), campo31.get(), campo32.get(),
+                                                           campo33.get(),
+                                                           campo41.get(), campo42.get(), campo43.get(),
+                                                           resultado_label))
     calcular_button4.grid(row=9, column=1, columnspan=2)
 
     # ------ Mediciones ----------
@@ -225,41 +264,53 @@ def crearVentana():
     resultado_label5 = tk.Label(marco_boton5, text="")
     resultado_label5.grid(row=8, column=5, columnspan=4)
 
-    # Crear las opciones para el combobox
-    opciones3 = ["Interpolación lineal", "Newton Hacia Adelante", "Newton Hacia Atrás", "Newton Diferencias Divididas",
-                 "Lagrange"]
-
-    # Crear un StringVar para almacenar la opción seleccionada
-    selected_option3 = tk.StringVar()
-
-    # Crear el combobox y asociar las opciones y el StringVar
-    combo3 = ttk.Combobox(marco_boton, textvariable=selected_option3, values=opciones3, state="normal")
-    combo3.grid(row=7, column=0, padx=5, pady=5)
-
-    # Configurar una función de devolución de llamada para manejar la selección
-    combo3.bind("<<ComboboxSelected>>", lambda event: on_select(event, combo3))
-
-    # Inicializar la opción seleccionada (puedes establecer un valor predeterminado si lo deseas)
-    selected_option3.set(opciones3[0])
-
-
     calcular_button5 = tk.Button(marco_boton5, text="Calcular Volumen",
-                                 command=lambda: reglaTresOctavosSimpson(radioCampo.get(),largoCampo.get(),intervalosCampo.get(),resultado_label5))
+                                 command=lambda: reglaTresOctavosSimpson(radioCampo.get(), largoCampo.get(),
+                                                                         intervalosCampo.get(), resultado_label5))
     calcular_button5.grid(row=14, column=5, columnspan=4)
-
-
-
 
     notebook.pack(fill="both", expand=True)
     ventana.mainloop()
 
 
-def on_select(event,combo):
+def minimosCuadrados(mes1, mes2, mes3, mes4, mes5, venta1, venta2, venta3, venta4, venta5, valorPredecir):
+    meses1 = float(mes1)
+    meses2 = float(mes2)
+    meses3 = float(mes3)
+    meses4 = float(mes4)
+    meses5 = float(mes5)
+    ventas1 = float(venta1)
+    ventas2 = float(venta2)
+    ventas3 = float(venta3)
+    ventas4 = float(venta4)
+    ventas5 = float(venta5)
+    ventaApredir = float(valorPredecir)
+
+    # Datos de ejemplo (meses y ventas)
+    meses = np.array([meses1, meses2, meses3, meses4, meses5])
+    ventas = np.array([ventas1, ventas2, ventas3, ventas4, ventas5])
+
+    # Ajuste de la línea de regresión usando mínimos cuadrados
+    A = np.vstack([meses, np.ones(len(meses))]).T
+    m, c = np.linalg.lstsq(A, ventas, rcond=None)[0]
+
+    # Predicción para un nuevo mes
+    nuevo_mes = ventaApredir
+    ventas_prediccion = m * nuevo_mes + c
+
+    # Imprimir el resultado
+    print(f"Para el mes {nuevo_mes}, la predicción de ventas es: {ventas_prediccion}")
+
+
+def on_select(event, combo):
     # Use the get method on the StringVar to retrieve the selected option
     selected_option = combo.get()
+    opcionSeleccionada = combo.get()
     print(f"Seleccionado: {selected_option}")
+    return selected_option
 
-def calcular_temperatura(hora1,hora2,hora3,hora4,hora5,tmp1,tmp2,tmp3,tmp4,tmp5,horaBuscada,resultado_label):
+
+def calcular_temperatura(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tmp4, tmp5, horaBuscada, resultado_label):
     hora_interes1 = float(hora1)
     hora_interes2 = float(hora2)
     hora_interes3 = float(hora3)
@@ -273,9 +324,9 @@ def calcular_temperatura(hora1,hora2,hora3,hora4,hora5,tmp1,tmp2,tmp3,tmp4,tmp5,
 
     horaIngresada = float(horaBuscada)
 
-
     # Datos de temperatura horaria (horas y temperaturas)
-    datos = [(hora_interes1, tmp_interes1), (hora_interes2, tmp_interes2), (hora_interes3, tmp_interes3), (hora_interes4, tmp_interes4), (hora_interes5, tmp_interes5)]
+    datos = [(hora_interes1, tmp_interes1), (hora_interes2, tmp_interes2), (hora_interes3, tmp_interes3),
+             (hora_interes4, tmp_interes4), (hora_interes5, tmp_interes5)]
 
     # Calcular las diferencias finitas hacia adelante
     n = len(datos)
@@ -302,7 +353,9 @@ def calcular_temperatura(hora1,hora2,hora3,hora4,hora5,tmp1,tmp2,tmp3,tmp4,tmp5,
         resultado += producto * tabla_diferencias[0][i]
     resultado_label.config(text=f"La temperatura estimada en la hora {horaIngresada} es {resultado:.2f} °C")
 
-def elimGauss(campo11, campo12, campo13, campo21,campo22, campo23, campo31, campo32,campo33, campo41, campo42, campo43,resultado_label):
+
+def elimGauss(campo11, campo12, campo13, campo21, campo22, campo23, campo31, campo32, campo33, campo41, campo42,
+              campo43, resultado_label):
     campo_11 = float(campo11)
     campo_12 = float(campo12)
     campo_13 = float(campo13)
@@ -317,7 +370,6 @@ def elimGauss(campo11, campo12, campo13, campo21,campo22, campo23, campo31, camp
     campo_42 = float(campo42)
     campo_43 = float(campo43)
 
-
     # INGRESO DE DATOS-------------------------------
     # Se ingreserá primero los valores de la matriz y después los valores del vector según la forma Ax = B, escrita como arreglos.
     m = 3
@@ -325,13 +377,11 @@ def elimGauss(campo11, campo12, campo13, campo21,campo22, campo23, campo31, camp
     # La función np.zeros() es una función de la biblioteca NumPy en Python que se utiliza para crear un array() de ceros con las dimensiones especificadas.
     # En este caso la matriz A sera de 3x3, y el vector B de 3x1
 
-
     A = np.array([[campo_11, campo_21, campo_41],
                   [campo_12, campo_22, campo_42],
                   [campo_13, campo_23, campo_43]], dtype=float)
 
     B = np.array([[campo_31], [campo_32], [campo_33]], dtype=float)
-
 
     # PROCEDIMIENTO-------------------------------
     casicero = 1e-15  # Considerar como 0
@@ -413,8 +463,8 @@ def elimGauss(campo11, campo12, campo13, campo21,campo22, campo23, campo31, camp
     print("Solución")
     print(X)
 
-def gaussJordan():
 
+def gaussJordan():
     # INGRESO DE DATOS-------------------------------
     # Se ingreserá primero los valores de la matriz y después los valores del vector según la forma Ax = B, escrita como arreglos.
     m = 3
@@ -519,8 +569,8 @@ def gaussJordan():
     print("Solución")
     print(X)
 
-def gaussSeidel():
 
+def gaussSeidel():
     # INGRESO DE DATOS-------------------------------
     # Se ingreserá primero los valores de la matriz y después los valores del vector según la forma Ax = B, escrita como arreglos.
     m = 3
@@ -627,9 +677,8 @@ def gaussSeidel():
     print("Solución")
     print(X)
 
+
 def jacobi():
-
-
     # INGRESO DE DATOS-------------------------------
     # Se ingreserá primero los valores de la matriz y después los valores del vector según la forma Ax = B, escrita como arreglos.
     m = 3
@@ -736,8 +785,8 @@ def jacobi():
     print("Solución")
     print(X)
 
-def montante():
 
+def montante():
     # INGRESO DE DATOS-------------------------------
     # Se ingreserá primero los valores de la matriz y después los valores del vector según la forma Ax = B, escrita como arreglos.
     m = 3
@@ -837,6 +886,7 @@ def montante():
     print("Solución")
     print(X)
 
+
 def NC_cerrada():
     # Tabla de constantes para las fórmulas Cerradas de Newton-Cotes
     con = [[3 / 2, 0, 1, 1, 0],
@@ -870,6 +920,7 @@ def NC_cerrada():
     print(res)
 
     return res
+
 
 def NC_cerrada2():
     # Tabla de constantes para las fórmulas Cerradas de Newton-Cotes
@@ -908,12 +959,11 @@ def NC_cerrada2():
 
     return res
 
-def reglaTresOctavosSimpson(radio,largo,intervalos,resultado_label):
 
+def reglaTresOctavosSimpson(radio, largo, intervalos, resultado_label):
     radioCampo = float(radio)
     largoCampo = int(largo)
     intervalosCampo = int(intervalos)
-
 
     # limite inferior de la integral
     a = 0
@@ -950,6 +1000,7 @@ def reglaTresOctavosSimpson(radio,largo,intervalos,resultado_label):
     resultado_label.config(text=f"El volumen es :  {res} ")
     print(res)
     return res
+
 
 def reglaTercioSimpson():
     # limite inferior de la integral
@@ -992,6 +1043,7 @@ def reglaTercioSimpson():
     print(res)
     return res
 
+
 def reglaTrapezoidal():
     # limite inferior de la integral
     a = 0
@@ -1027,7 +1079,6 @@ def reglaTrapezoidal():
     res = (h / 2) * (fa + 2 * fsum + fb)
     print(res)
     return res
-
 
 
 crearVentana()
