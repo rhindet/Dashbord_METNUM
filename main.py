@@ -1,14 +1,91 @@
+
 import tkinter as tk
 from tkinter import ttk
 import numpy as np
 import math
+from tkinter import PhotoImage
 from datetime import datetime
+from PIL import Image, ImageTk
 
 import pandas as pd
 from matplotlib import pyplot as plt
 
 opcionSeleccionada = ''
-func = lambda t,y:(-t*y)
+func = lambda t ,y :(- t *y)
+to = 0
+
+def cargar_imagen(ruta, height):
+    imagen = Image.open(ruta)
+    aspect_ratio = height / imagen.height
+    width = int(imagen.width * aspect_ratio)
+    imagen = imagen.resize((width, height), resample=Image.LANCZOS)
+    return ImageTk.PhotoImage(imagen)
+
+def borrar1(campoYO, campoH, campoTf, resultado_text):
+    campoYO.delete(0, tk.END)  # Borra desde el índice 0 hasta el final (tk.END)
+    campoH.delete(0, tk.END)
+    campoTf.delete(0, tk.END)
+    resultado_text.config(text="")
+
+
+def borrar2(radioCampo, largoCampo, intervalosCampo, resultado_label55):
+    radioCampo.delete(0, tk.END)
+    largoCampo.delete(0, tk.END)
+    intervalosCampo.delete(0, tk.END)
+    resultado_label55.config(text="")
+
+
+def borrar3(campo11, campo12, campo13, campo21, campo22, campo23, campo31, campo32, campo33, campo41, campo42, campo43,
+            resultado_Text4):
+    campo11.delete(0, tk.END)
+    campo12.delete(0, tk.END)
+    campo13.delete(0, tk.END)
+    campo21.delete(0, tk.END)
+    campo22.delete(0, tk.END)
+    campo23.delete(0, tk.END)
+    campo31.delete(0, tk.END)
+    campo32.delete(0, tk.END)
+    campo33.delete(0, tk.END)
+    campo41.delete(0, tk.END)
+    campo42.delete(0, tk.END)
+    campo43.delete(0, tk.END)
+
+    resultado_Text4.config(text="")
+
+
+def borrar4(meses, meses2, meses3, meses4, meses5, ventas, ventas2, ventas3, ventas4, ventas5, ventaPredecir,
+            resultado_Text5):
+    meses.delete(0, tk.END)
+    meses2.delete(0, tk.END)
+    meses3.delete(0, tk.END)
+    meses4.delete(0, tk.END)
+    meses5.delete(0, tk.END)
+    ventas.delete(0, tk.END)
+    meses.delete(0, tk.END)
+    ventas2.delete(0, tk.END)
+    ventas3.delete(0, tk.END)
+    ventas4.delete(0, tk.END)
+    ventas5.delete(0, tk.END)
+    ventaPredecir.delete(0, tk.END)
+
+    resultado_Text5.config(text="")
+
+
+def borrar5(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tmp4, tmp5, horaBuscada, resultado_label):
+    hora1.delete(0, tk.END)
+    hora2.delete(0, tk.END)
+    hora3.delete(0, tk.END)
+    hora4.delete(0, tk.END)
+    hora5.delete(0, tk.END)
+    tmp1.delete(0, tk.END)
+    tmp2.delete(0, tk.END)
+    tmp3.delete(0, tk.END)
+    tmp4.delete(0, tk.END)
+    tmp5.delete(0, tk.END)
+    horaBuscada.delete(0, tk.END)
+
+    resultado_label.config(text="")
+
 
 def crearVentana():
 
@@ -18,20 +95,62 @@ def crearVentana():
 
     notebook = ttk.Notebook(ventana)
 
+    ruta_imagen_pestaña1 = "tiempo.jpg"
+    altura_imagen = 500  # Set the desired height for the image
+    ancho_imagen = 800  # Set the desired width for the image
+    imagen_fondo_pestaña1 = cargar_imagen(ruta_imagen_pestaña1, altura_imagen)
+
+    ruta_imagen_pestaña2= "ventas.jpg"
+    ruta_imagen_pestaña3 = "geologia.jpg"
+    ruta_imagen_pestaña4 = "volumen.jpg"
+    ruta_imagen_pestaña5 = "temperatura.jpg"
+    altura_imagen2 = 500  # Set the desired height for the image
+    ancho_imagen2 = 800  # Set the desired width for the image
+    imagen_fondo_pestaña2 = cargar_imagen(ruta_imagen_pestaña2, altura_imagen)
+    imagen_fondo_pestaña3 = cargar_imagen(ruta_imagen_pestaña3, altura_imagen)
+    imagen_fondo_pestaña4 = cargar_imagen(ruta_imagen_pestaña4, altura_imagen)
+    imagen_fondo_pestaña5 = cargar_imagen(ruta_imagen_pestaña5, altura_imagen)
     pestaña1 = ttk.Frame(notebook)
     notebook.add(pestaña1, text="Clima")
+
+    canvas1 = tk.Canvas(pestaña1, width=ancho_imagen * 2, height=altura_imagen)
+    canvas1.pack(fill=tk.BOTH, expand=False)
+
+    canvas1.create_image(ancho_imagen, 0, anchor=tk.NE, image=imagen_fondo_pestaña1)
+
+
 
     pestaña2 = ttk.Frame(notebook)
     notebook.add(pestaña2, text="Ventas")
 
+    canvas2 = tk.Canvas(pestaña2, width=ancho_imagen2 * 2, height=altura_imagen2)
+    canvas2.pack(fill=tk.BOTH, expand=False)
+
+    canvas2.create_image(ancho_imagen2, 0, anchor=tk.NE, image=imagen_fondo_pestaña2)
+
     pestaña4 = ttk.Frame(notebook)
     notebook.add(pestaña4, text="Geologia")
+
+    canvas3 = tk.Canvas(pestaña4, width=ancho_imagen2 * 2, height=altura_imagen2)
+    canvas3.pack(fill=tk.BOTH, expand=False)
+
+    canvas3.create_image(ancho_imagen2, 0, anchor=tk.NE, image=imagen_fondo_pestaña3)
 
     pestaña5 = ttk.Frame(notebook)
     notebook.add(pestaña5, text="Volumen")
 
+    canvas5 = tk.Canvas(pestaña5, width=ancho_imagen * 2, height=altura_imagen)
+    canvas5.pack(fill=tk.BOTH, expand=False)
+
+    canvas5.create_image(ancho_imagen, 0, anchor=tk.NE, image=imagen_fondo_pestaña4)
+
     pestaña6 = ttk.Frame(notebook)
     notebook.add(pestaña6, text="Temperatura")
+
+    canvas6 = tk.Canvas(pestaña6, width=ancho_imagen * 2, height=altura_imagen)
+    canvas6.pack(fill=tk.BOTH, expand=False)
+
+    canvas6.create_image(ancho_imagen, 0, anchor=tk.NE, image=imagen_fondo_pestaña5)
 
     estilo = ttk.Style()
     estilo.configure("TNotebook.Tab", font=("Arial", 40))
@@ -47,106 +166,132 @@ def crearVentana():
 
     # Crear estilo para el LabelFrame con título más grande
     estilo_label_frame = ttk.Style()
-    estilo_label_frame.configure("Estilo.TLabelframe.Label", font=("Arial",20))
+    estilo_label_frame.configure("Estilo.TLabelframe.Label", font=("Arial" ,20))
 
     # Crear marco con LabelFrame y título más grande usando el estilo
     marco_boton2 = ttk.LabelFrame(pestaña2, text="Predicción teórica de ventas de un producto", padding=10, width=200,
                                   height=150, style="Estilo.TLabelframe")
     marco_boton2.pack(padx=10, pady=20, fill="both", expand=True)
 
-    etiqueta_columna_tmp2 = tk.Label(marco_boton2, text="Mes",font=("Arial", 50))
+    etiqueta_columna_tmp2 = tk.Label(marco_boton2, text="Mes" ,font=("Arial", 50))
     etiqueta_columna_tmp2.grid(row=1, column=0, padx=5, pady=5)
 
-    etiqueta_columna_tmp3 = tk.Label(marco_boton2, text="Mes a predecir",font=("Arial", 20))
+    etiqueta_columna_tmp3 = tk.Label(marco_boton2, text="Mes a predecir" ,font=("Arial", 20))
     etiqueta_columna_tmp3.grid(row=11, column=0, padx=5, pady=5)
 
-    etiqueta_columna_tmp2 = tk.Label(marco_boton2, text="Ventas",font=("Arial", 50))
+    etiqueta_columna_tmp2 = tk.Label(marco_boton2, text="Ventas" ,font=("Arial", 50))
     etiqueta_columna_tmp2.grid(row=1, column=2, padx=5, pady=5)
 
-    meses = tk.Entry(marco_boton2,font=("Arial", 20))
+    opciones3 = ["Interpolación lineal", "Newton Hacia Adelante", "Newton Hacia Atrás", "Newton Diferencias Divididas",
+                 "Lagrange"]
+
+    # Crear un StringVar para almacenar la opción seleccionada
+    selected_option3 = tk.StringVar()
+
+    # Crear el combobox y asociar las opciones y el StringVar
+    combo3 = ttk.Combobox(marco_boton2, textvariable=selected_option3, values=opciones3, state="normal")
+    combo3.grid(row=6, column=5, padx=5, pady=5)
+
+    # Configurar una función de devolución de llamada para manejar la selección
+    combo3.bind("<<ComboboxSelected>>", lambda event: on_select(event, combo3))
+
+    # Inicializar la opción seleccionada (puedes establecer un valor predeterminado si lo deseas)
+    selected_option3.set(opciones3[0])
+
+    meses = tk.Entry(marco_boton2 ,font=("Arial", 20))
     meses.grid(row=6, column=0, padx=5, pady=5)
 
-    meses2 = tk.Entry(marco_boton2,font=("Arial", 20))
+    meses2 = tk.Entry(marco_boton2 ,font=("Arial", 20))
     meses2.grid(row=7, column=0, padx=5, pady=5)
 
-    meses3 = tk.Entry(marco_boton2,font=("Arial", 20))
+    meses3 = tk.Entry(marco_boton2 ,font=("Arial", 20))
     meses3.grid(row=8, column=0, padx=5, pady=5)
 
-    meses4 = tk.Entry(marco_boton2,font=("Arial", 20))
+    meses4 = tk.Entry(marco_boton2 ,font=("Arial", 20))
     meses4.grid(row=9, column=0, padx=5, pady=5)
 
-    meses5 = tk.Entry(marco_boton2,font=("Arial", 20))
+    meses5 = tk.Entry(marco_boton2 ,font=("Arial", 20))
     meses5.grid(row=10, column=0, padx=5, pady=5)
 
-    ventas = tk.Entry(marco_boton2,font=("Arial", 20))
+    ventas = tk.Entry(marco_boton2 ,font=("Arial", 20))
     ventas.grid(row=6, column=2, padx=5, pady=5)
 
-    ventas2 = tk.Entry(marco_boton2,font=("Arial", 20))
+    ventas2 = tk.Entry(marco_boton2 ,font=("Arial", 20))
     ventas2.grid(row=7, column=2, padx=5, pady=5)
 
-    ventas3 = tk.Entry(marco_boton2,font=("Arial", 20))
+    ventas3 = tk.Entry(marco_boton2 ,font=("Arial", 20))
     ventas3.grid(row=8, column=2, padx=5, pady=5)
 
-    ventas4 = tk.Entry(marco_boton2,font=("Arial", 20))
+    ventas4 = tk.Entry(marco_boton2 ,font=("Arial", 20))
     ventas4.grid(row=9, column=2, padx=5, pady=5)
 
-    ventas5 = tk.Entry(marco_boton2,font=("Arial", 20))
+    ventas5 = tk.Entry(marco_boton2 ,font=("Arial", 20))
     ventas5.grid(row=10, column=2, padx=5, pady=5)
 
-    ventaPredecir = tk.Entry(marco_boton2,font=("Arial", 20))
+    ventaPredecir = tk.Entry(marco_boton2 ,font=("Arial", 20))
     ventaPredecir.grid(row=11, column=2, padx=5, pady=5)
+
+    resultado_Text5 = tk.Label(marco_boton2, text="", font=("Arial", 20))
+    resultado_Text5.grid(row=13, column=0, columnspan=2)
 
     # Crear el botón con texto más grande
     calcular_ventas = tk.Button(marco_boton2, text="Predecir ventas", command=lambda: minimosCuadrados(
-        meses.get()
+        meses.get(), meses2.get(), meses3.get(), meses4.get(), meses5.get(), ventas.get(), ventas2.get(), ventas3.get(), ventas4.get(), ventas5.get(), ventaPredecir.get() ,resultado_Text5
     ), width=20, height=2, font=("Arial", 16))  # Ajusta el valor de font según tus necesidades
-    calcular_ventas.grid(row=12, column=0, columnspan=2)
+    calcular_ventas.grid(row=14 ,column=0, columnspan=2)
 
-    etiqueta_hora = tk.Label(marco_boton, text="Ingrese la hora para estimar la temperatura:",font=("Arial", 20))
+    borrar4Btn = tk.Button(marco_boton2, text="Borrar",
+                           command=lambda: borrar4( meses, meses2, meses3, meses4, meses5, ventas, ventas2, ventas3, ventas4, ventas5, ventaPredecir ,resultado_Text5), font=("Arial", 20))
+    borrar4Btn.grid(row=16, column=0, columnspan=2)
+
+
+    #------------- Clima -----------------
+
+    etiqueta_hora = tk.Label(marco_boton, text="Ingrese la hora para estimar la temperatura:", font=("Arial", 20))
     etiqueta_hora.grid(row=0, column=0, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
 
     # Crear etiquetas para las columnas
     etiqueta_columna_hora = tk.Label(marco_boton, text="Hora", font=("Arial", 30))
     etiqueta_columna_hora.grid(row=1, column=0, padx=5, pady=5)
 
-    etiqueta_columna_tmp = tk.Label(marco_boton, text="Temperatura" ,font=("Arial", 30) )
+    etiqueta_columna_tmp = tk.Label(marco_boton, text="Temperatura", font=("Arial", 30))
     etiqueta_columna_tmp.grid(row=1, column=1, padx=5, pady=5)
 
     # Crear cuadros de texto sin bucle for
-    hora1 = tk.Entry(marco_boton,font=("Arial", 20))
+    hora1 = tk.Entry(marco_boton, font=("Arial", 20))
     hora1.grid(row=2, column=0, padx=5, pady=5)
 
-    hora2 = tk.Entry(marco_boton,font=("Arial", 20))
+    hora2 = tk.Entry(marco_boton, font=("Arial", 20))
     hora2.grid(row=3, column=0, padx=5, pady=5)
 
-    hora3 = tk.Entry(marco_boton,font=("Arial", 20))
+    hora3 = tk.Entry(marco_boton, font=("Arial", 20))
     hora3.grid(row=4, column=0, padx=5, pady=5)
 
-    hora4 = tk.Entry(marco_boton,font=("Arial", 20))
+    hora4 = tk.Entry(marco_boton, font=("Arial", 20))
     hora4.grid(row=5, column=0, padx=5, pady=5)
 
-    hora5 = tk.Entry(marco_boton,font=("Arial", 20))
+    hora5 = tk.Entry(marco_boton, font=("Arial", 20))
     hora5.grid(row=6, column=0, padx=5, pady=5)
 
-    tmp1 = tk.Entry(marco_boton,font=("Arial", 20))
+    tmp1 = tk.Entry(marco_boton, font=("Arial", 20))
     tmp1.grid(row=2, column=1, padx=5, pady=5)
 
-    tmp2 = tk.Entry(marco_boton,font=("Arial", 20))
+    tmp2 = tk.Entry(marco_boton, font=("Arial", 20))
     tmp2.grid(row=3, column=1, padx=5, pady=5)
 
-    tmp3 = tk.Entry(marco_boton,font=("Arial", 20))
+    tmp3 = tk.Entry(marco_boton, font=("Arial", 20))
     tmp3.grid(row=4, column=1, padx=5, pady=5)
 
-    tmp4 = tk.Entry(marco_boton,font=("Arial", 20))
+    tmp4 = tk.Entry(marco_boton, font=("Arial", 20))
     tmp4.grid(row=5, column=1, padx=5, pady=5)
 
-    tmp5 = tk.Entry(marco_boton,font=("Arial", 20))
+    tmp5 = tk.Entry(marco_boton, font=("Arial", 20))
     tmp5.grid(row=6, column=1, padx=5, pady=5)
 
-    horaBuscada = tk.Entry(marco_boton,font=("Arial", 20))
+    horaBuscada = tk.Entry(marco_boton, font=("Arial", 20))
     horaBuscada.grid(row=7, column=0, columnspan=2, pady=10)
 
-    resultado_label = tk.Label(marco_boton, text="",font=("Arial", 20))
+    resultado_label = tk.Label(marco_boton, text="", font=("Arial", 20))
     resultado_label.grid(row=8, column=0, columnspan=2)
 
     # Crear las opciones para el combobox
@@ -160,67 +305,83 @@ def crearVentana():
     combo2 = ttk.Combobox(marco_boton, textvariable=selected_option2, values=opciones2, state="normal")
     combo2.grid(row=4, column=5, padx=5, pady=5)
 
+    calcular_button = tk.Button(marco_boton, text="Calcular Temperatura", width=20, height=2,
+                                font=("Arial", 20))
+    calcular_button.grid(row=9, column=0, columnspan=2)
+
     # Configurar una función de devolución de llamada para manejar la selección
-    combo2.bind("<<ComboboxSelected>>", lambda event: on_select(event, combo2))
+    combo2.bind("<<ComboboxSelected>>", lambda event: on_select(event, combo2,calcular_button,hora1.get(), hora2.get(), hora3.get(), hora4.get(),
+                                                                  hora5.get(), tmp1.get(), tmp2.get(), tmp3.get(),
+                                                                  tmp4.get(), tmp5.get(), horaBuscada.get(),
+                                                                  resultado_label))
 
     # Inicializar la opción seleccionada (puedes establecer un valor predeterminado si lo deseas)
     selected_option2.set(opciones2[0])
 
-    calcular_button = tk.Button(marco_boton, text="Calcular Temperatura",
-                                command=lambda: calcular_temperatura(hora1.get(), hora2.get(), hora3.get(), hora4.get(),
-                                                                     hora5.get(), tmp1.get(), tmp2.get(), tmp3.get(),
-                                                                     tmp4.get(), tmp5.get(), horaBuscada.get(),
-                                                                     resultado_label),width=20, height=2,font=("Arial", 20))
-    calcular_button.grid(row=9, column=0, columnspan=2)
+
+
+
+
+    selected_option2 = combo2.get()
+
+
+
+    borrar1Btn = tk.Button(marco_boton, text="Borrar",
+                           command=lambda: borrar5(hora1, hora2, hora3, hora4,
+                                                                     hora5, tmp1, tmp2, tmp3,
+                                                                     tmp4, tmp5, horaBuscada,
+                                                                     resultado_label), font=("Arial", 20))
+    borrar1Btn.grid(row=12, column=0, columnspan=2)
+
 
     # ------ GEOLOGIA ----------
 
     marco_boton4 = ttk.LabelFrame(pestaña4,
                                   text="Distribución de la densidad del suelo",
-                                  padding=10, width=100, height=150,style="Estilo.TLabelframe")
+                                  padding=10, width=100, height=150, style="Estilo.TLabelframe")
     marco_boton4.pack(padx=10, pady=20, fill="both", expand=True)
 
-    etiqueta_hora4 = tk.Label(marco_boton4, text="variaciones de las densidades")
+    etiqueta_hora4 = tk.Label(marco_boton4, text="Variaciones de las densidades", font=("Arial", 20))
     etiqueta_hora4.grid(row=0, column=0, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
 
     # Crear cuadros de texto sin bucle for
-    campo11 = tk.Entry(marco_boton4)
+    campo11 = tk.Entry(marco_boton4, font=("Arial", 20))
     campo11.grid(row=2, column=0, padx=5, pady=5)
 
-    campo12 = tk.Entry(marco_boton4)
+    campo12 = tk.Entry(marco_boton4, font=("Arial", 20))
     campo12.grid(row=3, column=0, padx=5, pady=5)
 
-    campo13 = tk.Entry(marco_boton4)
+    campo13 = tk.Entry(marco_boton4, font=("Arial", 20))
     campo13.grid(row=4, column=0, padx=5, pady=5)
 
-    campo21 = tk.Entry(marco_boton4)
+    campo21 = tk.Entry(marco_boton4, font=("Arial", 20))
     campo21.grid(row=2, column=1, padx=5, pady=5)
 
-    campo22 = tk.Entry(marco_boton4)
+    campo22 = tk.Entry(marco_boton4, font=("Arial", 20))
     campo22.grid(row=3, column=1, padx=5, pady=5)
 
-    campo23 = tk.Entry(marco_boton4)
+    campo23 = tk.Entry(marco_boton4, font=("Arial", 20))
     campo23.grid(row=4, column=1, padx=5, pady=5)
 
-    campo31 = tk.Entry(marco_boton4)
+    campo31 = tk.Entry(marco_boton4, font=("Arial", 20))
     campo31.grid(row=2, column=4, padx=5, pady=5)
 
-    campo32 = tk.Entry(marco_boton4)
+    campo32 = tk.Entry(marco_boton4, font=("Arial", 20))
     campo32.grid(row=3, column=4, padx=5, pady=5)
 
-    campo33 = tk.Entry(marco_boton4)
+    campo33 = tk.Entry(marco_boton4, font=("Arial", 20))
     campo33.grid(row=4, column=4, padx=5, pady=5)
 
     separator1 = ttk.Separator(marco_boton4, orient="vertical")
     separator1.grid(row=2, column=3, rowspan=3, sticky="ns", padx=10)
 
-    campo41 = tk.Entry(marco_boton4)
+    campo41 = tk.Entry(marco_boton4, font=("Arial", 20))
     campo41.grid(row=2, column=2, padx=5, pady=5)
 
-    campo42 = tk.Entry(marco_boton4)
+    campo42 = tk.Entry(marco_boton4, font=("Arial", 20))
     campo42.grid(row=3, column=2, padx=5, pady=5)
 
-    campo43 = tk.Entry(marco_boton4)
+    campo43 = tk.Entry(marco_boton4, font=("Arial", 20))
     campo43.grid(row=4, column=2, padx=5, pady=5)
 
     # Crear las opciones para el combobox
@@ -231,7 +392,7 @@ def crearVentana():
 
     # Crear el combobox y asociar las opciones y el StringVar
     combo = ttk.Combobox(marco_boton4, textvariable=selected_option, values=opciones, state="normal")
-    combo.grid(row=5, column=2, padx=5, pady=5)
+    combo.grid(row=7, column=2, padx=5, pady=5)
 
     # Configurar una función de devolución de llamada para manejar la selección
     combo.bind("<<ComboboxSelected>>", lambda event: on_select(event, combo))
@@ -239,85 +400,166 @@ def crearVentana():
     # Inicializar la opción seleccionada (puedes establecer un valor predeterminado si lo deseas)
     selected_option.set(opciones[0])
 
-    resultado_label4 = tk.Label(marco_boton4, text="")
-    resultado_label4.grid(row=8, column=0, columnspan=2)
+    resultado_Text4 = tk.Label(marco_boton4, text="", font=("Arial", 20))
+    resultado_Text4.grid(row=8, column=0, columnspan=2)
 
     calcular_button4 = tk.Button(marco_boton4, text="Calcular Densidad",
                                  command=lambda: elimGauss(campo11.get(), campo12.get(), campo13.get(), campo21.get(),
                                                            campo22.get(), campo23.get(), campo31.get(), campo32.get(),
                                                            campo33.get(),
                                                            campo41.get(), campo42.get(), campo43.get(),
-                                                           resultado_label))
+                                                           resultado_Text4), font=("Arial", 20))
     calcular_button4.grid(row=9, column=1, columnspan=2)
+
+    borrar3Btn = tk.Button(marco_boton4, text="Borrar",
+                           command=lambda: borrar3(campo11, campo12, campo13, campo21,
+                                                   campo22, campo23, campo31, campo32,
+                                                   campo33,
+                                                   campo41, campo42, campo43,
+                                                   resultado_Text4), font=("Arial", 20))
+    borrar3Btn.grid(row=12, column=1, columnspan=2)
 
     # ------ Mediciones ----------
     marco_boton5 = ttk.LabelFrame(pestaña5,
                                   text="Ingrese los datos",
-                                  padding=10, width=100, height=150)
+                                  padding=10, style="Estilo.TLabelframe")
     marco_boton5.pack(padx=10, pady=20, fill="both", expand=True)
 
-    etiquetaRadio = tk.Label(marco_boton5, text="Radio del tanque")
+    etiquetaRadio = tk.Label(marco_boton5, text="Radio del tanque", font=("Arial", 16))
     etiquetaRadio.grid(row=0, column=5, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
 
     # Crear cuadros de texto sin bucle for
-    radioCampo = tk.Entry(marco_boton5)
+    radioCampo = tk.Entry(marco_boton5, font=("Arial", 20))
     radioCampo.grid(row=2, column=5, padx=5, pady=5)
 
-    etiquetaLargo = tk.Label(marco_boton5, text="Largo del tanque")
+    etiquetaLargo = tk.Label(marco_boton5, text="Largo del tanque", font=("Arial", 16))
     etiquetaLargo.grid(row=4, column=5, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
 
     # Crear cuadros de texto sin bucle for
-    largoCampo = tk.Entry(marco_boton5)
+    largoCampo = tk.Entry(marco_boton5, font=("Arial", 20))
     largoCampo.grid(row=5, column=5, padx=5, pady=5)
 
-    etiquetaIntervalos = tk.Label(marco_boton5, text="Numero de intervalos")
+    etiquetaIntervalos = tk.Label(marco_boton5, text="Numero de intervalos", font=("Arial", 16))
     etiquetaIntervalos.grid(row=6, column=5, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
 
+
     # Crear cuadros de texto sin bucle for
-    intervalosCampo = tk.Entry(marco_boton5)
+    intervalosCampo = tk.Entry(marco_boton5, font=("Arial", 20))
     intervalosCampo.grid(row=7, column=5, padx=5, pady=5)
 
-    resultado_label5 = tk.Label(marco_boton5, text="")
-    resultado_label5.grid(row=8, column=5, columnspan=4)
+    # Crear las opciones para el combobox
+    opciones4 = ["Regla Trapezoidal",
+	"Regla de 1/3 Simpson",
+	"Regla de 3/8 Simpson",
+	"Newton-Cotes Cerradas",
+	"Newton-Cotes Abiertas",
+]
+
+    # Crear un StringVar para almacenar la opción seleccionada
+    selected_option4 = tk.StringVar()
+
+    # Crear el combobox y asociar las opciones y el StringVar
+    combo4 = ttk.Combobox(marco_boton5, textvariable=selected_option4, values=opciones4, state="normal")
+    combo4.grid(row=9, column=5, padx=5, pady=5)
+
+    # Configurar una función de devolución de llamada para manejar la selección
+    combo4.bind("<<ComboboxSelected>>", lambda event: on_select(event, combo4))
+
+    # Inicializar la opción seleccionada (puedes establecer un valor predeterminado si lo deseas)
+    selected_option4.set(opciones4[0])
+
+    resultado_label55 = tk.Label(marco_boton5, text="", font=("Arial", 16))
+    resultado_label55.grid(row=8, column=5, columnspan=4)
 
     calcular_button5 = tk.Button(marco_boton5, text="Calcular Volumen",
                                  command=lambda: reglaTresOctavosSimpson(radioCampo.get(), largoCampo.get(),
-                                                                         intervalosCampo.get(), resultado_label5))
+                                                                         intervalosCampo.get(), resultado_label55),
+                                 font=("Arial", 20))
     calcular_button5.grid(row=14, column=5, columnspan=4)
 
+    borrar2Btn = tk.Button(marco_boton5, text="Borrar",
+                           command=lambda: borrar2(radioCampo, largoCampo,
+                                                   intervalosCampo, resultado_label55), font=("Arial", 20))
+    borrar2Btn.grid(row=16, column=5, columnspan=4)
 
-
-    #-------- TEMPERATURA ----------
+    # -------- TEMPERATURA ----------
     # Crear marco con LabelFrame y título más grande usando el estilo
-    marco_botonA = ttk.LabelFrame(pestaña6, text="Estimacion de la variacion en la temperatura de un cuerpo en funcion del tiempo", padding=10, width=200,
+    marco_botonA = ttk.LabelFrame(pestaña6,
+                                  text="Estimacion de la variacion en la temperatura de un cuerpo en funcion del tiempo",
+                                  padding=10, width=200,
                                   height=150, style="Estilo.TLabelframe")
     marco_botonA.pack(padx=10, pady=20, fill="both", expand=True)
     # Crear cuadros de texto sin bucle for
-    campoYO = tk.Entry(marco_botonA)
+
+    etiquetaYo = tk.Label(marco_botonA, text="Ingrese Yo", font=("Arial", 16))
+    etiquetaYo.grid(row=0, column=0, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
+
+    campoYO = tk.Entry(marco_botonA, font=("Arial", 20))
     campoYO.grid(row=2, column=0, padx=5, pady=5)
 
-    campoH = tk.Entry(marco_botonA)
-    campoH.grid(row=3, column=0, padx=5, pady=5)
+    etiquetaH = tk.Label(marco_botonA, text="Ingrese H", font=("Arial", 16))
+    etiquetaH.grid(row=3, column=0, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
 
-    campoTf= tk.Entry(marco_botonA)
-    campoTf.grid(row=4, column=0, padx=5, pady=5)
-    resultado_label5 = tk.Label(marco_botonA, text="")
-    resultado_label5.grid(row=8, column=5, columnspan=4)
+    campoH = tk.Entry(marco_botonA, font=("Arial", 20))
+    campoH.grid(row=5, column=0, padx=5, pady=5)
+
+    etiquetaTf = tk.Label(marco_botonA, text="Ingrese Tf", font=("Arial", 16))
+    etiquetaTf.grid(row=6, column=0, columnspan=2)  # Usar grid en lugar de pack para disposición en cuadrícula
+
+    campoTf = tk.Entry(marco_botonA, font=("Arial", 20))
+    campoTf.grid(row=8, column=0, padx=5, pady=5)
+
+    resultado_text = tk.Label(marco_botonA, text="", font=("Arial", 16))
+    resultado_text.grid(row=10, column=0, columnspan=2)
 
     calcularVariacionButton = tk.Button(marco_botonA, text="Calcular Variacion",
-                                 command=lambda: reglaTresOctavosSimpson(radioCampo.get(), largoCampo.get(),
-                                                                         intervalosCampo.get(), resultado_label5))
-    calcularVariacionButton.grid(row=14, column=5, columnspan=4)
+                                        font=("Arial", 20))
+    calcularVariacionButton.grid(row=16, column=0, columnspan=2)
+
+
+
+    # Crear las opciones para el combobox
+    opciones5 = [	"Euler Modificado",
+	"Runge-Kutta 2° orden",
+	"Runge-Kutta 3° orden",
+	"Runge-Kutta 4° orden 1/3 Simpson",
+	"Runge-Kutta 4° orden 3/8 Simpson",
+	"Runge-Kutta Orden Superior"
+]
+
+    # Crear un StringVar para almacenar la opción seleccionada
+    selected_option5 = tk.StringVar()
+
+    # Crear el combobox y asociar las opciones y el StringVar
+    combo5 = ttk.Combobox(marco_botonA, textvariable=selected_option5, values=opciones5, state="normal")
+    combo5.grid(row=9, column=0, padx=5, pady=5)
+
+    # Configurar una función de devolución de llamada para manejar la selección
+    combo5.bind("<<ComboboxSelected>>", lambda event: on_select(event, combo5))
+
+    selected_option = combo5.get()
+    opcionSeleccionada = combo5.get()
+    print(f"Seleccionado: {selected_option}")
+    calcularVariacionButton['command'] = lambda: rkpaso(func, to, campoYO.get(), campoH.get(), campoTf.get(),
+                                           resultado_text)
+
+    # Inicializar la opción seleccionada (puedes establecer un valor predeterminado si lo deseas)
+    selected_option5.set(opciones5[0])
+
+
+    borrar1Btn = tk.Button(marco_botonA, text="Borrar",
+                            font=("Arial", 20))
+    borrar1Btn.grid(row=19, column=0, columnspan=2)
+    borrar1Btn['command'] = lambda: borrar1(campoYO, campoH, campoTf, resultado_text)()
 
     notebook.pack(fill="both", expand=True)
     mcLinFunc()
 
-
-
     ventana.mainloop()
 
 
-def minimosCuadrados(mes1, mes2, mes3, mes4, mes5, venta1, venta2, venta3, venta4, venta5, valorPredecir):
+def minimosCuadrados(mes1, mes2, mes3, mes4, mes5, venta1, venta2, venta3, venta4, venta5, valorPredecir,
+                     resultado_Text5):
     meses1 = float(mes1)
     meses2 = float(mes2)
     meses3 = float(mes3)
@@ -343,15 +585,107 @@ def minimosCuadrados(mes1, mes2, mes3, mes4, mes5, venta1, venta2, venta3, venta
     ventas_prediccion = m * nuevo_mes + c
 
     # Imprimir el resultado
-    print(f"Para el mes {nuevo_mes}, la predicción de ventas es: {ventas_prediccion}")
+    resultado_Text5.config(text=f"Para el mes {nuevo_mes}, la predicción de ventas es: {round(ventas_prediccion, 2)}")
 
 
-def on_select(event, combo):
+def on_select(event, combo,calcular_button,hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tmp4, tmp5, horaBuscada, resultado_label):
     # Use the get method on the StringVar to retrieve the selected option
     selected_option = combo.get()
     opcionSeleccionada = combo.get()
     print(f"Seleccionado: {selected_option}")
+    calcular_button['command'] = None
+    if (selected_option == "Newton Hacia Adelante"):
+        print("usando Newton Hacia Adelante")
+        calcular_button['command'] = lambda: calcular_temperatura(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tmp4, tmp5, horaBuscada, resultado_label)
+    if (selected_option == "Newton Hacia Atrás"):
+        print("usando Newton Hacia atras")
+        calcular_button['command'] = lambda: newtonHaciaAtras(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tmp4, tmp5, horaBuscada, resultado_label)
+    if (selected_option == "Lagrange"):
+        print("usando Lagrange")
+        calcular_button['command'] = lambda: calcular_larange(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tmp4, tmp5, horaBuscada, resultado_label)
+    if (selected_option == "Newton Diferencias Divididas"):
+        print("usando Newton Diferencias Divididas")
+        calcular_button['command'] = lambda: newton_diferenicas_divididas(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tmp4,
+                                                              tmp5, horaBuscada, resultado_label)
+    if (selected_option == "Interpolación lineal"):
+            print("usando Interpolación lineal")
+            calcular_button['command'] = lambda: interpolacion_lineal(hora1, hora2, hora3, hora4, hora5, tmp1,
+                                                                              tmp2, tmp3, tmp4,
+                                                                              tmp5, horaBuscada, resultado_label)
+
+
     return selected_option
+
+def interpolacion_lineal(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tmp4, tmp5, horaBuscada, resultado_label):
+    hora_interes1, hora_interes2, hora_interes3, hora_interes4, hora_interes5 = map(float, [hora1, hora2, hora3, hora4, hora5])
+    tmp_interes1, tmp_interes2, tmp_interes3, tmp_interes4, tmp_interes5 = map(float, [tmp1, tmp2, tmp3, tmp4, tmp5])
+
+    resultado_label.config(text="")
+
+    horaIngresada = float(horaBuscada)
+
+    # Datos de temperatura horaria (horas y temperaturas)
+    horas = [hora_interes1, hora_interes2, hora_interes3, hora_interes4, hora_interes5]
+    temperaturas = [tmp_interes1, tmp_interes2, tmp_interes3, tmp_interes4, tmp_interes5]
+
+    # Interpolación lineal
+    if horaIngresada < min(horas) or horaIngresada > max(horas):
+        print("La hora ingresada está fuera del rango de datos.")
+        resultado_label.config(text="La hora ingresada está fuera del rango de datos.")
+        return
+
+    for i in range(len(horas) - 1):
+        if horaIngresada >= horas[i] and horaIngresada <= horas[i + 1]:
+            tasa_cambio = (temperaturas[i + 1] - temperaturas[i]) / (horas[i + 1] - horas[i])
+            resultado = temperaturas[i] + tasa_cambio * (horaIngresada - horas[i])
+            print(f"La temperatura estimada en la hora {horaIngresada} es {resultado} °C")
+            resultado_label.config(text=f"La temperatura estimada en la hora {horaIngresada} es {resultado:.2f} °C")
+            return
+
+    # Si la hora ingresada no se encuentra en el rango de datos
+    print("La hora ingresada está fuera del rango de datos.")
+    resultado_label.config(text="La hora ingresada está fuera del rango de datos.")
+
+def newton_diferenicas_divididas(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tmp4, tmp5, horaBuscada, resultado_label):
+    hora_interes1 = float(hora1)
+    hora_interes2 = float(hora2)
+    hora_interes3 = float(hora3)
+    hora_interes4 = float(hora4)
+    hora_interes5 = float(hora5)
+    tmp_interes1 = float(tmp1)
+    tmp_interes2 = float(tmp2)
+    tmp_interes3 = float(tmp3)
+    tmp_interes4 = float(tmp4)
+    tmp_interes5 = float(tmp5)
+
+    resultado_label.config(text="")
+
+    horaIngresada = float(horaBuscada)
+
+    # Datos de temperatura horaria (horas y temperaturas)
+    horas = [hora_interes1, hora_interes2, hora_interes3, hora_interes4, hora_interes5]
+    temperaturas = [tmp_interes1, tmp_interes2, tmp_interes3, tmp_interes4, tmp_interes5]
+
+    # Calcular las diferencias divididas
+    n = len(horas)
+    tabla_diferencias = [[0] * n for _ in range(n)]
+    for i in range(n):
+        tabla_diferencias[i][0] = temperaturas[i]
+
+    for j in range(1, n):
+        for i in range(n - j):
+            tabla_diferencias[i][j] = (tabla_diferencias[i + 1][j - 1] - tabla_diferencias[i][j - 1]) / (horas[i + j] - horas[i])
+
+    # Calcular el término de Newton
+    resultado = tabla_diferencias[0][0]
+    producto = 1
+    for i in range(1, n):
+        producto *= (horaIngresada - horas[i - 1])
+        resultado += producto * tabla_diferencias[0][i]
+
+    print(f"La temperatura estimada en la hora {horaIngresada} es {resultado} °C")
+
+    resultado_label.config(text=f"La temperatura estimada en la hora {horaIngresada} es {resultado:.2f} °C")
 
 
 def calcular_temperatura(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tmp4, tmp5, horaBuscada, resultado_label):
@@ -365,6 +699,7 @@ def calcular_temperatura(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tm
     tmp_interes3 = float(tmp3)
     tmp_interes4 = float(tmp4)
     tmp_interes5 = float(tmp5)
+    resultado_label.config(text=f"")
 
     horaIngresada = float(horaBuscada)
 
@@ -397,9 +732,93 @@ def calcular_temperatura(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tm
         resultado += producto * tabla_diferencias[0][i]
     resultado_label.config(text=f"La temperatura estimada en la hora {horaIngresada} es {resultado:.2f} °C")
 
+def newtonHaciaAtras(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tmp4, tmp5, horaBuscada, resultado_label):
+    hora_interes1 = float(hora1)
+    hora_interes2 = float(hora2)
+    hora_interes3 = float(hora3)
+    hora_interes4 = float(hora4)
+    hora_interes5 = float(hora5)
+    tmp_interes1 = float(tmp1)
+    tmp_interes2 = float(tmp2)
+    tmp_interes3 = float(tmp3)
+    tmp_interes4 = float(tmp4)
+    tmp_interes5 = float(tmp5)
+
+    horaIngresada = float(horaBuscada)
+
+    # Datos de temperatura horaria (horas y temperaturas)
+    datos = [(hora_interes1, tmp_interes1), (hora_interes2, tmp_interes2), (hora_interes3, tmp_interes3),
+             (hora_interes4, tmp_interes4), (hora_interes5, tmp_interes5)]
+
+    # Calcular las diferencias divididas hacia atrás
+    n = len(datos)
+    tabla_diferencias = [[0] * n for _ in range(n)]
+    for i in range(n):
+        tabla_diferencias[i][0] = datos[n - i - 1][1]
+
+    for j in range(1, n):
+        for i in range(n - j):
+            tabla_diferencias[i][j] = (tabla_diferencias[i][j - 1] - tabla_diferencias[i + 1][j - 1]) / (datos[n - i - 1][0] - datos[n - i - 1 - j][0])
+
+    # Calcular el término de Newton hacia atrás
+    resultado = tabla_diferencias[0][0]
+    producto = 1
+    for i in range(1, n):
+        producto *= (horaIngresada - datos[n - i - 1][0])
+        resultado += producto * tabla_diferencias[0][i]
+
+    print(f"La temperatura estimada en la hora {horaIngresada} es {resultado} °C")
+
+    resultado = tabla_diferencias[0][0]
+    producto = 1
+    for i in range(1, n):
+        producto *= (horaIngresada - datos[n - i - 1][0])
+        resultado += producto * tabla_diferencias[0][i]
+    resultado_label.config(text=f"La temperatura estimada en la hora {horaIngresada} es {resultado} °C")
+
+
+def calcular_larange(hora1, hora2, hora3, hora4, hora5, tmp1, tmp2, tmp3, tmp4, tmp5, horaBuscada, resultado_label):
+    hora_interes1 = float(hora1)
+    hora_interes2 = float(hora2)
+    hora_interes3 = float(hora3)
+    hora_interes4 = float(hora4)
+    hora_interes5 = float(hora5)
+    tmp_interes1 = float(tmp1)
+    tmp_interes2 = float(tmp2)
+    tmp_interes3 = float(tmp3)
+    tmp_interes4 = float(tmp4)
+    tmp_interes5 = float(tmp5)
+
+    resultado_label.config(text="")
+
+    horaIngresada = float(horaBuscada)
+
+    # Datos de temperatura horaria (horas y temperaturas)
+    horas = [hora_interes1, hora_interes2, hora_interes3, hora_interes4, hora_interes5]
+    temperaturas = [tmp_interes1, tmp_interes2, tmp_interes3, tmp_interes4, tmp_interes5]
+
+    # Función de interpolación de Lagrange
+    def lagrange_interpolation(x, horas, temperaturas):
+        n = len(horas)
+        resultado = 0
+        for i in range(n):
+            termino = temperaturas[i]
+            for j in range(n):
+                if j != i:
+                    termino *= (x - horas[j]) / (horas[i] - horas[j])
+            resultado += termino
+        return resultado
+
+    # Calcular la temperatura estimada usando la interpolación de Lagrange
+    resultado = lagrange_interpolation(horaIngresada, horas, temperaturas)
+
+    print(f"La temperatura estimada en la hora {horaIngresada} es {resultado} °C")
+
+    resultado_label.config(text=f"La temperatura estimada en la hora {horaIngresada} es {resultado:.2f} °C")
+
 
 def elimGauss(campo11, campo12, campo13, campo21, campo22, campo23, campo31, campo32, campo33, campo41, campo42,
-              campo43, resultado_label):
+              campo43, resultado_Text4):
     campo_11 = float(campo11)
     campo_12 = float(campo12)
     campo_13 = float(campo13)
@@ -506,6 +925,7 @@ def elimGauss(campo11, campo12, campo13, campo21, campo22, campo23, campo31, cam
     print(AB)
     print("Solución")
     print(X)
+    resultado_Text4.config(text=f"Matriz Inicial: \n {AB0} \n\n Matriz resultante: \n  {AB}\n \nSolución:\n {X} ")
 
 
 def gaussJordan():
@@ -1004,7 +1424,7 @@ def NC_cerrada2():
     return res
 
 
-def reglaTresOctavosSimpson(radio, largo, intervalos, resultado_label):
+def reglaTresOctavosSimpson(radio, largo, intervalos, resultado_label55):
     radioCampo = float(radio)
     largoCampo = int(largo)
     intervalosCampo = int(intervalos)
@@ -1041,7 +1461,7 @@ def reglaTresOctavosSimpson(radio, largo, intervalos, resultado_label):
 
     # cálculo con la formula de la regla trapezoidal
     res = (3 / 8) * h * (fa + 3 * fsum + fb)
-    resultado_label.config(text=f"El volumen es :  {res} ")
+    resultado_label55.config(text=f"El volumen es :  {res} ")
     print(res)
     return res
 
@@ -1124,24 +1544,26 @@ def reglaTrapezoidal():
     print(res)
     return res
 
-#PROCEDIMIENTO EULER MODIFICADO
+
+# PROCEDIMIENTO EULER MODIFICADO
 def eulerm(f, to, yo, h, tf):
-    #Parámetros:
-    #f = edo
-    #to = tiempo inicial
-    #yo = temperatura inicial
-    #h = paso del tiempo
-    #tf = tiempo final
-    y = [yo]  #El primer valor de y en la lista es yo
-    t = [to]  #El primer valor de t en la lista es to
-    n = int((tf-to)/h) #Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
-    for i in range (1, n+1):
-        ti = t[i-1]
-        yi = y[i-1]
-        yim = yi+(h*f(ti, yi))
-        yi = yi+(h/2)*(f(ti+h, yim+f(ti, yi))) #Fórmula de Euler modificado
-        t.append(ti+h) #Se agrega el valor de t a la lista
-        y.append(yi) #Se agrega el valor de y a la lista
+    # Parámetros:
+    # f = edo
+    # to = tiempo inicial
+    # yo = temperatura inicial
+    # h = paso del tiempo
+    # tf = tiempo final
+    y = [yo]  # El primer valor de y en la lista es yo
+    t = [to]  # El primer valor de t en la lista es to
+    n = int((
+                        tf - to) / h)  # Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
+    for i in range(1, n + 1):
+        ti = t[i - 1]
+        yi = y[i - 1]
+        yim = yi + (h * f(ti, yi))
+        yi = yi + (h / 2) * (f(ti + h, yim + f(ti, yi)))  # Fórmula de Euler modificado
+        t.append(ti + h)  # Se agrega el valor de t a la lista
+        y.append(yi)  # Se agrega el valor de y a la lista
     return (t, y)
 
 
@@ -1208,6 +1630,7 @@ def mcCuadFunc():
     plt.legend()
     plt.show()
 
+
 def mcCuadr():
     # Lectura de base de datos
     tabla = pd.read_csv("2021_10_EstMeteorologica.csv", header=0, decimal=',')
@@ -1261,6 +1684,7 @@ def mcCuadr():
     plt.title('Regresión Cuadrática')
     plt.legend()
     plt.show()
+
 
 def mcCubica():
     # Lectura de base de datos
@@ -1322,6 +1746,7 @@ def mcCubica():
     plt.legend()
     plt.show()
 
+
 def mcLinFunc():
     # Lectura de base de datos
     tabla = pd.read_csv("2021_10_EstMeteorologica.csv", header=0, decimal=',')
@@ -1381,6 +1806,7 @@ def mcLinFunc():
     plt.legend()
     plt.show()
 
+
 def mcLinRec():
     # Lectura de base de datos
     tabla = pd.read_csv("2021_10_EstMeteorologica.csv", header=0, decimal=',')
@@ -1429,6 +1855,28 @@ def mcLinRec():
     plt.legend()
     plt.show()
 
+
+def rkpaso(func, to, yo, h, tf, resultado_text):
+    y0 = float(yo)
+    _h = float(h)
+    tF = float(tf)
+    t, ye = rk38sim(func, to, y0, _h, tF)
+
+    # RESULTADOS
+    t = np.transpose([t])
+    ye = np.transpose([ye])
+    print(t)
+    print(ye)
+    plt.plot(t, ye, label='ye(t)')
+    plt.xlabel('Tiempo (t)')
+    plt.ylabel('ye(t)')
+    plt.title('Gráfico de ye en función de t')
+    plt.legend()
+    plt.show()
+
+    resultado_text.config(text=f"Matriz t: \n {str(t)} \n Matriz ye:\n {str(ye)}")
+
+
 def RK20():
     # PROCEDIMIENTO EULER MODIFICADO
     def rk2Ord(f, to, yo, h, tf):
@@ -1441,7 +1889,7 @@ def RK20():
         y = [yo]  # El primer valor de y en la lista es yo
         t = [to]  # El primer valor de t en la lista es to
         n = int((
-                            tf - to) / h)  # Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
+                        tf - to) / h)  # Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
         for i in range(1, n + 1):
             ti = t[i - 1]
             yi = y[i - 1]
@@ -1450,6 +1898,7 @@ def RK20():
             t.append(ti + h)
             y.append(yi + 1 / 2 * (k1 + k2))
         return (t, y)
+
 
 def RK30():
     # PROCEDIMIENTO EULER MODIFICADO
@@ -1463,7 +1912,7 @@ def RK30():
         y = [yo]  # El primer valor de y en la lista es yo
         t = [to]  # El primer valor de t en la lista es to
         n = int((
-                            tf - to) / h)  # Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
+                        tf - to) / h)  # Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
         for i in range(1, n + 1):
             ti = t[i - 1]
             yi = y[i - 1]
@@ -1473,6 +1922,7 @@ def RK30():
             t.append(ti + h)
             y.append(yi + 1 / 6 * (k1 + 4 * k2 + k3))
         return (t, y)
+
 
 def RK40Y13():
     # PROCEDIMIENTO EULER MODIFICADO
@@ -1486,7 +1936,7 @@ def RK40Y13():
         y = [yo]  # El primer valor de y en la lista es yo
         t = [to]  # El primer valor de t en la lista es to
         n = int((
-                            tf - to) / h)  # Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
+                        tf - to) / h)  # Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
         for i in range(1, n + 1):
             ti = t[i - 1]
             yi = y[i - 1]
@@ -1498,42 +1948,30 @@ def RK40Y13():
             y.append(yi + 1 / 6 * (k1 + 2 * k2 - 2 * k3 + k4))
         return (t, y)
 
+
 def rk38sim(f, to, yo, h, tf):
-    #Parámetros:
-    #f = edo
-    #to = tiempo inicial
-    #yo = temperatura inicial
-    #h = paso del tiempo
-    #tf = tiempo final
-    y = [yo]  #El primer valor de y en la lista es yo
-    t = [to]  #El primer valor de t en la lista es to
-    n = int((tf-to)/h) #Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
-    for i in range (1, n+1):
-        ti = t[i-1]
-        yi = y[i-1]
-        k1 = f(ti,yi)
-        k2 = h*(f(ti+h/3,yi+1/3*k1))
-        k3 = h*(f(ti+2/3*h,yi+1/3*k1+1/3*k2))
-        k4 = h*(f(ti+h,yi+k1-k2+k3))
-        t.append(ti+h)
-        y.append(yi+1/8*(k1+3*k2-3*k3+k4))
+    # Parámetros:
+    # f = edo
+    # to = tiempo inicial
+    # yo = temperatura inicial
+    # h = paso del tiempo
+    # tf = tiempo final
+    y = [yo]  # El primer valor de y en la lista es yo
+    t = [to]  # El primer valor de t en la lista es to
+    n = int((
+                        tf - to) / h)  # Cantidad de iteraciones definidas por el entero del tiempo final menos el tiempo inicial dividido entre el paso del tiempo h.
+    for i in range(1, n + 1):
+        ti = t[i - 1]
+        yi = y[i - 1]
+        k1 = f(ti, yi)
+        k2 = h * (f(ti + h / 3, yi + 1 / 3 * k1))
+        k3 = h * (f(ti + 2 / 3 * h, yi + 1 / 3 * k1 + 1 / 3 * k2))
+        k4 = h * (f(ti + h, yi + k1 - k2 + k3))
+        t.append(ti + h)
+        y.append(yi + 1 / 8 * (k1 + 3 * k2 - 3 * k3 + k4))
     return (t, y)
 
+
 crearVentana()
-
-#INGRESO DE PARÁMETROS
-to = 0
-yo = float(input(f"Ingrese la temperatura inicial del cuerpo: "))
-h = float(input(f"Ingrese la cantidad de paso del tiempo: "))
-tf = float(input(f"Ingrese el tiempo final: "))
-
-t,ye = rk38sim(func, to, yo, h, tf)
-
-#RESULTADOS
-t = np.transpose([t])
-ye = np.transpose([ye])
-print(t)
-print(ye)
-
 
 
